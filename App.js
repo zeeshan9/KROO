@@ -9,7 +9,7 @@ import { SecondScreen } from "./src/component/Screen/SecondScreen";
 
 const navOptionHandler = () => ({
   // To show or hide the header in the app
-  headerShown: false,
+  headerShown: true,
 });
 
 const StackApp = createStackNavigator();
