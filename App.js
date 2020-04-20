@@ -10,10 +10,6 @@ import Dashboard from "./src/components/screens/Dashboard";
 const Stack = createStackNavigator();
 
 const title = "KROO";
-// const navOptionHandler = () => ({
-//   // To show or hide the header in the app
-//   headerShown: true,
-// });
 
 const App = () => {
   return (
