@@ -18,9 +18,8 @@ const Dashboard = () => {
     <Tab.Navigator
       initialRouteName='Home'
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color }) => {
+        tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          let size = 32;
 
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
@@ -68,9 +67,9 @@ const Dashboard = () => {
       tabBarOptions={{
         activeBackgroundColor: '#0066cc',
         activeTintColor: 'white',
-        labelStyle: {
-          display: 'none',
-        },
+        // labelStyle: {
+        //   display: 'none',
+        // },
       }}
     >
       <Tab.Screen name='Home' component={Home} />

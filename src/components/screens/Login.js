@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   StyleSheet,
@@ -7,20 +7,52 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { loginUser } from '../../actions/auth';
 
-const Login = ({ navigation }) => {
+const Login = ({ navigation, loginUser }) => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const { email, password } = formData;
+
+  const PROPERTY_EMAIL = 'email';
+  const PROPERTY_PASSWORD = 'password';
+
+  const onChangeText = (text, property) => {
+    switch (property) {
+      case PROPERTY_EMAIL:
+        setFormData({ ...formData, email: text });
+        break;
+      case PROPERTY_PASSWORD:
+        setFormData({ ...formData, password: text });
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>KROO</Text>
-      <TextInput style={styles.textInput} placeholder='Email' />
+      <TextInput
+        style={styles.textInput}
+        placeholder='Email'
+        value={email}
+        onChangeText={(text) => onChangeText(text, PROPERTY_EMAIL)}
+      />
       <TextInput
         secureTextEntry={true}
         style={styles.textInput}
         placeholder='Password'
+        value={password}
+        onChangeText={(text) => onChangeText(text, PROPERTY_PASSWORD)}
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Dashboard')}
+        onPress={() => loginUser(email, password, navigation)}
       >
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
@@ -78,6 +110,9 @@ const styles = StyleSheet.create({
 
 Login.propTypes = {
   navigation: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
 };
 
-export default Login;
+export default connect(null, {
+  loginUser,
+})(Login);
