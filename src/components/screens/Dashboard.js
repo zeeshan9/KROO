@@ -1,15 +1,15 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from '../tab-screens/dashboard/Home';
-import Chat from '../tab-screens/dashboard/Chat';
-import Messages from '../tab-screens/dashboard/Messages';
-import Invitations from '../tab-screens/dashboard/Invitations';
-import History from '../tab-screens/dashboard/History';
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Home from "../tab-screens/dashboard/Home";
+import Chat from "../tab-screens/dashboard/Chat";
+import Messages from "../tab-screens/dashboard/Messages";
+import Invitations from "../tab-screens/dashboard/Invitations";
+import History from "../tab-screens/dashboard/History";
 import {
   MaterialCommunityIcons,
   FontAwesome,
   FontAwesome5,
-} from '@expo/vector-icons';
+} from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,8 +21,8 @@ const Dashboard = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
+          if (route.name === "Home") {
+            iconName = focused ? "home" : "home-outline";
 
             return (
               <MaterialCommunityIcons
@@ -31,8 +31,8 @@ const Dashboard = () => {
                 color={color}
               />
             );
-          } else if (route.name === 'Chat') {
-            iconName = focused ? 'message-text' : 'message-text-outline';
+          } else if (route.name === "Chat") {
+            iconName = focused ? "message-text" : "message-text-outline";
 
             return (
               <MaterialCommunityIcons
@@ -41,20 +41,20 @@ const Dashboard = () => {
                 color={color}
               />
             );
-          } else if (route.name === 'Messages') {
-            iconName = focused ? 'envelope' : 'envelope-o';
+          } else if (route.name === "Messages") {
+            iconName = focused ? "envelope" : "envelope-o";
 
             return <FontAwesome name={iconName} size={size} color={color} />;
-          } else if (route.name === 'Invitations') {
-            iconName = 'handshake';
+          } else if (route.name === "Invitations") {
+            iconName = "handshake";
 
             return focused ? (
               <FontAwesome5 name={iconName} size={size} color={color} solid />
             ) : (
               <FontAwesome5 name={iconName} size={size} color={color} />
             );
-          } else if (route.name === 'History') {
-            iconName = 'clock';
+          } else if (route.name === "History") {
+            iconName = "clock";
 
             return focused ? (
               <FontAwesome5 name={iconName} size={size} color={color} solid />
@@ -65,8 +65,8 @@ const Dashboard = () => {
         },
       })}
       tabBarOptions={{
-        activeBackgroundColor: '#0066cc',
-        activeTintColor: 'white',
+        activeBackgroundColor: "#0066cc",
+        activeTintColor: "white",
         // labelStyle: {
         //   display: 'none',
         // },
