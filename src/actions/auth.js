@@ -1,36 +1,68 @@
-import firebase from "../config/firebase";
-import { USER_ERROR, USER_LOADED } from "./types";
-import { showAlert } from "./alert";
+import firebase from '../config/firebase';
+import { USER_ERROR, USER_LOADED } from './types';
+import { showAlert } from './alert';
 
 // This function is used to login the user
-export const loginUser = (email, password, navigation) => async (dispatch) => {
-  try {
-    await firebase.auth().signInWithEmailAndPassword(email, password);
-
-    const user = firebase.auth().currentUser;
-
-    const res = await firebase
-      .firestore()
-      .collection("users")
-      .doc(user.uid)
-      .get();
-
-    dispatch({
-      type: USER_LOADED,
-      payload: {
-        userId: user.uid,
-        displayName: user.displayName,
-        credits: res.data().credits,
-      },
+export const loginUser = (email, password, navigation) => (dispatch) => {
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .catch((err) => {
+      dispatch({ type: USER_ERROR });
+      dispatch(showAlert(err.message));
     });
 
-    dispatch(showAlert("Login successful"));
+  const user = firebase.auth().currentUser;
 
-    navigation.navigate("Dashboard");
-  } catch (err) {
-    dispatch({ type: USER_ERROR });
-    dispatch(showAlert(err.message));
+  if (user) {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(user.uid)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          dispatch({
+            type: USER_LOADED,
+            payload: {
+              userId: user.uid,
+              displayName: user.displayName,
+              credits: doc.data().credits,
+            },
+          });
+
+          dispatch(showAlert('Login successful'));
+
+          navigation.navigate('Dashboard');
+        }
+      })
+      .catch((err) => {
+        dispatch(showAlert(err.message));
+      });
   }
+
+  // try {
+  //   await firebase.auth().signInWithEmailAndPassword(email, password);
+  //   const user = firebase.auth().currentUser;
+  //   const res = await firebase
+  //     .firestore()
+  //     .collection("users")
+  //     .doc(user.uid)
+  //     .get();
+  //   dispatch({
+  //     type: USER_LOADED,
+  //     payload: {
+  //       userId: user.uid,
+  //       displayName: user.displayName,
+  //       credits: res.data().credits,
+  //     },
+  //   });
+  //   dispatch(showAlert("Login successful"));
+  //   navigation.navigate("Dashboard");
+  // } catch (err) {
+  //   dispatch({ type: USER_ERROR });
+  //   dispatch(showAlert(err.message));
+  // }
 };
 
 // This function is used to register a new user
@@ -46,7 +78,7 @@ export const registerUser = (name, email, password, navigation) => async (
       displayName: name,
     });
 
-    await firebase.firestore().collection("users").doc(user.uid).set({
+    await firebase.firestore().collection('users').doc(user.uid).set({
       credits: 0,
     });
 
@@ -55,9 +87,9 @@ export const registerUser = (name, email, password, navigation) => async (
       payload: { userId: user.uid, displayName: user.displayName, credits: 0 },
     });
 
-    dispatch(showAlert("Registration successful"));
+    dispatch(showAlert('Registration successful'));
 
-    navigation.navigate("Login");
+    navigation.navigate('Login');
   } catch (err) {
     dispatch({ type: USER_ERROR });
     dispatch(showAlert(err.message));
