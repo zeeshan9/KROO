@@ -1,11 +1,12 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
+import Colors from "../../../constants/colors";
 
 export const ProfileBox = ({ props }) => {
   return (
     <View style={styles.container}>
       <View style={styles.userName}>
-        <Text>userName</Text>
+        <Text style={styles.text}>userName</Text>
       </View>
       <View style={styles.profileBox}>
         <Text style={styles.text}>Name: Erika</Text>
@@ -33,5 +34,6 @@ const styles = StyleSheet.create({
   text: {
     flex: 1,
     fontSize: 20,
+    color: Colors.textColor,
   },
 });

@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
 import { IMAGE } from "../../../constants/Images";
 import Colors from "../../../constants/colors";
+
 export const CoinBar = ({ auth }) => {
   return (
     <View style={styles.container}>
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
   profileName: {
     justifyContent: "center",
     alignSelf: "center",
+    color: Colors.textColor,
   },
 
   iconLogo: {
@@ -71,5 +73,6 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     alignSelf: "center",
     fontSize: 50,
+    color: Colors.textColor,
   },
 });
