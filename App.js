@@ -28,6 +28,11 @@ const App = () => {
             component={Dashboard}
             options={{ title, headerLeft: null }}
           />
+          <Stack.Screen
+            name='ChatList'
+            component={ChatList}
+            options={{ title, headerLeft: null }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

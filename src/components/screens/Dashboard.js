@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../tab-screens/dashboard/Home";
 import Chat from "../tab-screens/dashboard/Chat";
 import Messages from "../tab-screens/dashboard/Messages";
-import Invitations from "../tab-screens/dashboard/Invitations";
+import Notification from "../tab-screens/dashboard/Notification";
 import History from "../tab-screens/dashboard/History";
 import {
   MaterialCommunityIcons,
@@ -45,7 +45,7 @@ const Dashboard = () => {
             iconName = focused ? "envelope" : "envelope-o";
 
             return <FontAwesome name={iconName} size={size} color={color} />;
-          } else if (route.name === "Invitations") {
+          } else if (route.name === "Notification") {
             iconName = "handshake";
 
             return focused ? (
@@ -75,7 +75,7 @@ const Dashboard = () => {
       <Tab.Screen name='Home' component={Home} />
       <Tab.Screen name='Chat' component={Chat} />
       <Tab.Screen name='Messages' component={Messages} />
-      <Tab.Screen name='Invitations' component={Invitations} />
+      <Tab.Screen name='Notification' component={Notification} />
       <Tab.Screen name='History' component={History} />
     </Tab.Navigator>
   );
