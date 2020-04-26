@@ -2,23 +2,23 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import Colors from "../../../constants/colors";
 import { CoinBar } from "../../screens/homecomponents/CoinBar";
-import { ChatList } from "../../screens/chatcomponent/ChatList";
+import ChatList from "../../screens/chatcomponent/ChatList";
+import ChatGroups from "../../screens/chatcomponent/ChatGroups";
 import { Ranking } from "../../screens/homecomponents/Ranking";
 
-const Chat = ({ auth }) => {
+const Chat = ({ auth, navigation }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.topContainer}>
+      {/* <View style={styles.topContainer}>
         <CoinBar auth={auth} />
-      </View>
+      </View> */}
       <View style={styles.middleContainer}>
-        <ChatList />
+        <ChatGroups navigation={navigation} />
+        {/* <ChatList /> */}
       </View>
-      <View style={styles.bottomcontainer}>
+      {/* <View style={styles.bottomcontainer}>
         <Ranking />
-      </View>
-
-      {/* <Text>{auth.displayName}</Text> */}
+      </View> */}
     </View>
   );
 };

@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./src/components/screens/Login";
 import Register from "./src/components/screens/Register";
 import Dashboard from "./src/components/screens/Dashboard";
+import ChatList from "./src/components/screens/chatcomponent/ChatList";
 import { Provider } from "react-redux";
 import store from "./src/store";
 
@@ -26,6 +27,11 @@ const App = () => {
           <Stack.Screen
             name='Dashboard'
             component={Dashboard}
+            options={{ title, headerLeft: null }}
+          />
+          <Stack.Screen
+            name='ChatList'
+            component={ChatList}
             options={{ title, headerLeft: null }}
           />
         </Stack.Navigator>
