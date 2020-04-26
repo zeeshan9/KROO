@@ -1,32 +1,24 @@
 import React from "react";
-import { FlatList } from "react-native-gesture-handler";
-import { IMAGE } from "../../../constants/Images";
-import { Image, StyleSheet } from "react-native";
+import { View, Text, Button } from "react-native";
 import { ListItem } from "react-native-elements";
-import ChatList from "./ChatList";
+import { FlatList } from "react-native-gesture-handler";
 
-const list = [
-  {
-    name: "Zeeshan",
-    subtitle: "Vice President",
-  },
-  {
-    name: "Sherhryar",
-    avatar_url:
-      "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg", //IMAGE.ICON_PROFILE, //<Image style={styles.iconLogo} source={IMAGE.ICON_PROFILE} />,
-    subtitle: "Vice Chairman",
-  },
-  // more items
-];
+const ChatGroups = (props) => {
+  const list = [
+    {
+      name: "Kroo Group",
+      subtitle: "want to to be Motivational join our group",
+    },
+    {
+      name: "zeeshan Group",
+      avatar_url:
+        "https://www.google.com/search?q=harry+potter&safe=active&rlz=1C1CHBF_enPK831PK831&sxsrf=ALeKk02x3RBhsAVZBc0BRO1iE7q1dYnWZQ:1587893508847&source=lnms&tbm=isch&sa=X&ved=2ahUKEwj3uaSk5IXpAhWx4YUKHXVqBn4Q_AUoAXoECBkQAw&biw=1366&bih=625#imgrc=4xE0oIbyljrGeM", //IMAGE.ICON_PROFILE, //<Image style={styles.iconLogo} source={IMAGE.ICON_PROFILE} />,
+      subtitle: "this is a our freind group",
+    },
+    // more items
+  ];
 
-const pressHanlder = () => {
-  this.props.navigation.navigate("ChatList");
-  //   <ChatList />;
-};
-export default class ChatGroups extends React.Component {
-  keyExtractor = (item, index) => index.toString();
-
-  renderItem = ({ item }) => (
+  const renderItem = ({ item }) => (
     <ListItem
       title={item.name}
       subtitle={item.subtitle}
@@ -37,25 +29,14 @@ export default class ChatGroups extends React.Component {
       bottomDivider
       chevron
       //working heren
-      onPress={(item) => this.navigation.navigate("ChatList")}
+      onPress={(item) => props.navigation.navigate("ChatList")}
     />
   );
 
-  render() {
-    return (
-      <FlatList
-        keyExtractor={this.keyExtractor}
-        data={list}
-        renderItem={this.renderItem}
-      />
-    );
-  }
-}
-const styles = StyleSheet.create({
-  iconLogo: {
-    width: 50,
-    height: 50,
-    borderRadius: 150 / 2,
-    alignSelf: "center",
-  },
-});
+  const keyExtractor = (item, index) => index.toString();
+  return (
+    <FlatList keyExtractor={keyExtractor} data={list} renderItem={renderItem} />
+  );
+};
+
+export default ChatGroups;

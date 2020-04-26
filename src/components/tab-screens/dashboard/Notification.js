@@ -29,17 +29,12 @@ const Notification = (props) => {
       }}
       bottomDivider
       chevron
-      //working heren
-      // onPress={(item) => this.navigation.navigate("ChatList")}
     />
   );
 
   const keyExtractor = (item, index) => index.toString();
   return (
     <FlatList keyExtractor={keyExtractor} data={list} renderItem={renderItem} />
-    // <View style={styles.container}>
-    //   <Text>Invitations</Text>
-    // </View>
   );
 };
 
