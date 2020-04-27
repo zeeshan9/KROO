@@ -10,6 +10,8 @@ import {
   FontAwesome,
   FontAwesome5,
 } from "@expo/vector-icons";
+import { Image } from "react-native";
+import { IMAGE } from "../../constants/Images";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,44 +24,60 @@ const Dashboard = () => {
           let iconName;
 
           if (route.name === "Home") {
-            iconName = focused ? "home" : "home-outline";
+            iconName = focused ? IMAGE.ICON_HOME : IMAGE.ICON_HOMECOLOR; //"home" : "home-outline";
 
             return (
-              <MaterialCommunityIcons
-                name={iconName}
-                size={size}
-                color={color}
-              />
+              <Image source={iconName} style={{ width: 20, height: 20 }} />
+              // <MaterialCommunityIcons
+              //   name={iconName}
+              //   size={size}
+              //   color={color}
+              // />
             );
           } else if (route.name === "Chat") {
-            iconName = focused ? "message-text" : "message-text-outline";
+            iconName = focused ? IMAGE.ICON_SPEECH : IMAGE.ICON_CHAT; //"message-text" : "message-text-outline";
 
             return (
-              <MaterialCommunityIcons
-                name={iconName}
-                size={size}
-                color={color}
-              />
+              <Image source={iconName} style={{ width: 20, height: 20 }} />
+              // <MaterialCommunityIcons
+              //   name={iconName}
+              //   size={size}
+              //   color={color}
+              // />
             );
           } else if (route.name === "Messages") {
-            iconName = focused ? "envelope" : "envelope-o";
+            iconName = focused ? IMAGE.ICON_EMAIL2 : IMAGE.ICON_Email1; //"envelope" : "envelope-o";
 
-            return <FontAwesome name={iconName} size={size} color={color} />;
+            return (
+              <Image source={iconName} style={{ width: 20, height: 20 }} />
+            ); //<FontAwesome name={iconName} size={size} color={color} />;
           } else if (route.name === "Notification") {
             iconName = "handshake";
 
             return focused ? (
-              <FontAwesome5 name={iconName} size={size} color={color} solid />
+              <Image
+                source={IMAGE.ICON_NOTIFICATION2}
+                style={{ width: 20, height: 20 }}
+              /> //<FontAwesome5 name={iconName} size={size} color={color} solid />
             ) : (
-              <FontAwesome5 name={iconName} size={size} color={color} />
+              <Image
+                source={IMAGE.ICON_NOTIFICATION1}
+                style={{ width: 20, height: 20 }}
+              /> //<FontAwesome5 name={iconName} size={size} color={color} />
             );
           } else if (route.name === "History") {
             iconName = "clock";
 
             return focused ? (
-              <FontAwesome5 name={iconName} size={size} color={color} solid />
+              <Image
+                source={IMAGE.ICON_TIMECOLOR}
+                style={{ width: 20, height: 20 }}
+              /> // <FontAwesome5 name={iconName} size={size} color={color} solid />
             ) : (
-              <FontAwesome5 name={iconName} size={size} color={color} />
+              <Image
+                source={IMAGE.ICON_TIME}
+                style={{ width: 20, height: 20 }}
+              /> //<FontAwesome5 name={iconName} size={size} color={color} />
             );
           }
         },

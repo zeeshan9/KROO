@@ -7,7 +7,7 @@ export const Ranking = () => {
     <View style={styles.container}>
       <View style={styles.topBarLeft}>
         <View style={styles.userName}>
-          <Text>Group Names</Text>
+          <Text style={styles.grpcolor}>Group Names</Text>
         </View>
         <View style={styles.profileBox}>
           <View style={styles.container}>
@@ -18,7 +18,7 @@ export const Ranking = () => {
       </View>
       <View style={styles.topBarCenter}>
         <View style={styles.userName}>
-          <Text>Group Names</Text>
+          <Text style={styles.grpcolor}>User Ranking</Text>
         </View>
         <View style={styles.profileBox}>
           <View style={styles.container}>
@@ -30,7 +30,7 @@ export const Ranking = () => {
       <View style={styles.topBarRight}>
         <Image style={styles.iconLogo} source={IMAGE.ICON_CROWN} />
         <Text style={styles.yourkroo}>Your Kroo</Text>
-        <Text style={styles.points}>800</Text>
+        <Text style={styles.points}>900</Text>
         <Text style={styles.yourkroo}>Go On</Text>
       </View>
     </View>
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     alignSelf: "center",
     fontSize: 50,
+    color: Colors.primary,
   },
   //   topBar
   userName: {
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignSelf: "center",
     fontSize: 20,
+    color: Colors.accent,
   },
   iconLogo: {
     flex: 2,
@@ -102,5 +104,8 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 150 / 2,
     alignSelf: "center",
+  },
+  grpcolor: {
+    color: Colors.white,
   },
 });
