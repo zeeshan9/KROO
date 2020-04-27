@@ -21,18 +21,18 @@ const App = () => {
           <Stack.Screen
             name='Register'
             component={Register}
-            options={{ title }}
+            options={{ title, headerLeft: null }}
           />
           <Stack.Screen
             name='Dashboard'
             component={Dashboard}
             options={{ title, headerLeft: null }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name='ChatList'
             component={ChatList}
             options={{ title, headerLeft: null }}
-          />
+          /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
