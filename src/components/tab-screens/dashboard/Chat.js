@@ -6,6 +6,10 @@ import ChatGroups from '../../screens/chatcomponent/ChatGroups';
 // import { Ranking } from '../../screens/homecomponents/Ranking';
 
 const Chat = ({ auth, navigation }) => {
+  const SampleFunction = () => {
+    Alert.alert("Floating Button Clicked");
+  };
+
   return (
     <View style={styles.container}>
       {/* <View style={styles.topContainer}>
@@ -16,7 +20,24 @@ const Chat = ({ auth, navigation }) => {
       </View>
       {/* <View style={styles.bottomcontainer}>
         <Ranking />
+<<<<<<< HEAD
       </View> */}
+=======
+      </View>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={this.SampleFunction}
+        style={styles.TouchableOpacityStyle}
+      >
+        <Image
+          source={{
+            uri:
+              "https://reactnativecode.com/wp-content/uploads/2017/11/Floating_Button.png",
+          }}
+          style={styles.FloatingButtonStyle}
+        />
+      </TouchableOpacity>
+>>>>>>> e6b59b74211a0365dd13e19f1b7b836688e84c7c
     </View>
   );
 };
@@ -42,6 +63,21 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     paddingVertical: 3,
+  },
+  // FLoating action button style
+  TouchableOpacityStyle: {
+    position: "absolute",
+    width: 50,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    right: 30,
+    bottom: 30,
+  },
+  FloatingButtonStyle: {
+    resizeMode: "contain",
+    width: 50,
+    height: 50,
   },
 });
 
