@@ -1,7 +1,7 @@
-import React from "react";
-import { View, StyleSheet, Text, Image } from "react-native";
-import Colors from "../../../constants/colors";
-import { IMAGE } from "../../../constants/Images";
+import React from 'react';
+import { View, StyleSheet, Text, Image } from 'react-native';
+import Colors from '../../../constants/colors';
+import { IMAGE } from '../../../constants/Images';
 export const Ranking = () => {
   return (
     <View style={styles.container}>
@@ -40,7 +40,7 @@ export const Ranking = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     // backgroundColor: "white",
   },
   topBarLeft: {
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
   },
 
   profileName: {
-    justifyContent: "center",
-    alignSelf: "center",
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
 
   topBarCenter: {
@@ -68,13 +68,13 @@ const styles = StyleSheet.create({
   },
   points: {
     paddingTop: 5,
-    alignSelf: "center",
+    alignSelf: 'center',
     fontSize: 50,
     color: Colors.primary,
   },
   //   topBar
   userName: {
-    alignSelf: "center",
+    alignSelf: 'center',
     flex: 1,
   },
   profileBox: {
@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
   },
   groupName: {
     flex: 2,
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
     color: Colors.accent,
   },
   yourkroo: {
     flex: 1,
     paddingTop: 5,
-    flexDirection: "column",
-    alignSelf: "center",
+    flexDirection: 'column',
+    alignSelf: 'center',
     fontSize: 20,
     color: Colors.accent,
   },
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 150 / 2,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   grpcolor: {
     color: Colors.white,

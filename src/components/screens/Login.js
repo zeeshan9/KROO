@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   StyleSheet,
@@ -10,13 +10,7 @@ import {
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/auth';
 
-const Login = ({ navigation, loginUser, auth: { loading, user } }) => {
-  useEffect(() => {
-    if (!loading && user !== null) {
-      navigation.navigate('Dashboard');
-    }
-  }, []);
-
+const Login = ({ navigation, loginUser }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -117,13 +111,8 @@ const styles = StyleSheet.create({
 Login.propTypes = {
   navigation: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   loginUser,
 })(Login);

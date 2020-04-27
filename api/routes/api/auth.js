@@ -11,7 +11,14 @@ const firebase = require('../../config/firebase');
 // @access  Private
 router.get('/me', auth, async (req, res) => {
   try {
-    const user = await firebase.auth().getUser(req.user.id);
+    let user = await firebase.auth().getUser(req.user.id);
+
+    const points = await (
+      await firebase.firestore().collection('users').doc(user.uid).get()
+    ).data().points;
+
+    user = { ...user, points };
+
     res.json(user);
   } catch (err) {
     return res.status(500).json({ msg: err.message });

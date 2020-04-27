@@ -1,9 +1,9 @@
-import React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import Colors from "../../../constants/colors";
-import { CoinBar } from "../../screens/homecomponents/CoinBar";
-import ChatGroups from "../../screens/chatcomponent/ChatGroups";
-import { Ranking } from "../../screens/homecomponents/Ranking";
+import React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import Colors from '../../../constants/colors';
+// import { CoinBar } from "../../screens/homecomponents/CoinBar";
+import ChatGroups from '../../screens/chatcomponent/ChatGroups';
+// import { Ranking } from '../../screens/homecomponents/Ranking';
 
 const Chat = ({ auth, navigation }) => {
   return (
@@ -14,9 +14,9 @@ const Chat = ({ auth, navigation }) => {
       <View style={styles.middleContainer}>
         <ChatGroups navigation={navigation} />
       </View>
-      <View style={styles.bottomcontainer}>
+      {/* <View style={styles.bottomcontainer}>
         <Ranking />
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -24,23 +24,23 @@ const Chat = ({ auth, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: 5,
   },
   topContainer: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingVertical: 3,
   },
   middleContainer: {
     flex: 2,
-    flexDirection: "row",
+    flexDirection: 'row',
     backgroundColor: Colors.lightBlack,
   },
   bottomcontainer: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingVertical: 3,
   },
 });
