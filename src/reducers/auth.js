@@ -1,27 +1,38 @@
-import { USER_LOADED, USER_ERROR } from '../actions/types';
+import {
+  USER_LOADED,
+  USER_ERROR,
+  REGISTRATION_SUCCESSSFUL,
+  LOGIN_SUCCESSSFUL,
+} from '../actions/types';
+import { AsyncStorage } from 'react-native';
 
 const initialState = {
-  userId: null,
-  displayName: null,
-  credits: null,
+  token: null,
+  user: null,
+  loading: true,
 };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case REGISTRATION_SUCCESSSFUL:
+    case LOGIN_SUCCESSSFUL:
+      return {
+        ...state,
+        token: payload,
+        loading: false,
+      };
     case USER_LOADED:
       return {
         ...state,
-        userId: payload.userId,
-        displayName: payload.displayName,
-        credits: payload.credits,
+        loading: false,
+        user: payload,
       };
     case USER_ERROR:
       return {
         ...state,
-        userId: null,
-        displayName: null,
+        loading: false,
       };
     default:
       return state;
