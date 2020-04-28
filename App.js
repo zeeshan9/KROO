@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./src/components/screens/Login";
 import Register from "./src/components/screens/Register";
 import Dashboard from "./src/components/screens/Dashboard";
+import AddKroo from "./src/components/screens/AddKroo";
 import { Provider } from "react-redux";
 import store from "./src/store";
 import ChatList from "./src/components/screens/chatcomponent/ChatList";
@@ -17,7 +18,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Dashboard'>
+        <Stack.Navigator initialRouteName='Login'>
           <Stack.Screen name='Login' component={Login} options={{ title }} />
           <Stack.Screen
             name='Register'
@@ -29,11 +30,16 @@ const App = () => {
             component={Dashboard}
             options={{ title, headerLeft: null }}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name='ChatList'
             component={ChatList}
             options={{ title, headerLeft: null }}
-          /> */}
+          />
+          <Stack.Screen
+            name='AddKroo'
+            component={AddKroo}
+            options={{ title, headerLeft: null }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

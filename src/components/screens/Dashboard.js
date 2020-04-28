@@ -28,11 +28,6 @@ const Dashboard = () => {
 
             return (
               <Image source={iconName} style={{ width: 20, height: 20 }} />
-              // <MaterialCommunityIcons
-              //   name={iconName}
-              //   size={size}
-              //   color={color}
-              // />
             );
           } else if (route.name === "Chat") {
             iconName = focused ? IMAGE.ICON_SPEECH : IMAGE.ICON_CHAT; //"message-text" : "message-text-outline";

@@ -14,7 +14,8 @@ import { Ranking } from "../../screens/homecomponents/Ranking";
 
 const Chat = ({ auth, navigation }) => {
   const SampleFunction = () => {
-    Alert.alert("Floating Button Clicked");
+    // Alert.alert("Floating Button Clicked");
+    navigation.navigate("AddKroo");
   };
 
   return (
@@ -30,7 +31,7 @@ const Chat = ({ auth, navigation }) => {
       </View>
       <TouchableOpacity
         activeOpacity={0.5}
-        onPress={this.SampleFunction}
+        onPress={() => SampleFunction()}
         style={styles.TouchableOpacityStyle}
       >
         <Image

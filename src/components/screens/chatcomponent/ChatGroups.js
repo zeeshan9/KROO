@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Button } from "react-native";
 import { ListItem } from "react-native-elements";
 import { FlatList } from "react-native-gesture-handler";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getAllKroos } from "../../../actions/kroo";
+import { showAlert } from "../../../actions/alert";
 
-const ChatGroups = (props) => {
+const ChatGroups = ({
+  navigation,
+  kroo: { allKroosGroup },
+  showAlert,
+  getAllKroos,
+}) => {
+  useEffect(() => {
+    console.log("i am here");
+    getAllKroos();
+    console.log(" nowi am here");
+  }, [getAllKroos]);
+
   const list = [
     {
       name: "Kroo Group",
@@ -21,22 +36,59 @@ const ChatGroups = (props) => {
   const renderItem = ({ item }) => (
     <ListItem
       title={item.name}
-      subtitle={item.subtitle}
+      subtitle={item.description}
       leftAvatar={{
         source: item.avatar_url && { uri: item.avatar_url },
         title: item.name[0],
       }}
       bottomDivider
       chevron
-      //working heren
-      onPress={(item) => props.navigation.navigate("ChatList")}
+      onPress={(item) => navigation.navigate("ChatList", item)}
     />
   );
 
   const keyExtractor = (item, index) => index.toString();
   return (
-    <FlatList keyExtractor={keyExtractor} data={list} renderItem={renderItem} />
+    // <View>
+
+    // allKroosGroup.length > 0
+    //   ? allKroosGroup.map((kroo) => {
+    <FlatList
+      keyExtractor={keyExtractor}
+      data={allKroosGroup}
+      renderItem={renderItem}
+    />
+
+    // console.log("all kroo " + kroo.id + "name : " + kroo.name);
+    //   })
+    // : console.log("empty kroo")
+
+    /* {allKroosGroup.length > 0 ? (
+        allKroosGroup.map((kroo) => {
+          console.log("all kroo " + kroo.id);
+        })
+      ) : (
+        // <FlatList
+        //   keyExtractor={allKroosGroup.id}
+        //   data={allKroosGroup}
+        //   renderItem={renderItem}
+        // />
+        <View>
+          <Text>Kroo not loaded</Text>
+        </View>
+      )} */
+    // </View>
   );
 };
 
-export default ChatGroups;
+ChatGroups.propTypes = {
+  navigation: PropTypes.object.isRequired,
+  showAlert: PropTypes.func.isRequired,
+  getAllKroos: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  kroo: state.kroo,
+});
+
+export default connect(mapStateToProps, { getAllKroos, showAlert })(ChatGroups);

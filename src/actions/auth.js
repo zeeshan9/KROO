@@ -4,19 +4,19 @@ import {
   SERVER_URL,
   REGISTRATION_SUCCESSSFUL,
   LOGIN_SUCCESSSFUL,
-} from './types';
-import { showAlert } from './alert';
-import axios from 'axios';
-import { AsyncStorage } from 'react-native';
+} from "./types";
+import { showAlert } from "./alert";
+import axios from "axios";
+import { AsyncStorage } from "react-native";
 
 // This function is used to load the user with the token
 export const loadUser = () => async (dispatch) => {
   try {
-    const token = await AsyncStorage.getItem('token');
+    const token = await AsyncStorage.getItem("token");
 
     const config = {
       headers: {
-        'x-auth-token': token,
+        "x-auth-token": token,
       },
     };
 
@@ -35,7 +35,7 @@ export const loadUser = () => async (dispatch) => {
 export const loginUser = (email, password, navigation) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
 
@@ -44,19 +44,19 @@ export const loginUser = (email, password, navigation) => async (dispatch) => {
   try {
     const res = await axios.post(`${SERVER_URL}/api/auth`, body, config);
 
-    await AsyncStorage.setItem('token', res.data.token);
+    await AsyncStorage.setItem("token", res.data.token);
 
     dispatch({
       type: LOGIN_SUCCESSSFUL,
       payload: res.data.token,
     });
 
-    dispatch(showAlert('Login successful'));
+    dispatch(showAlert("Login successful"));
 
-    navigation.navigate('Dashboard');
+    navigation.navigate("Dashboard");
   } catch (err) {
     dispatch({ type: USER_ERROR });
-    dispatch(showAlert('Invalid credentials'));
+    dispatch(showAlert("Invalid credentials"));
   }
 };
 
@@ -66,7 +66,7 @@ export const registerUser = (name, email, password, navigation) => async (
 ) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
 
@@ -75,16 +75,16 @@ export const registerUser = (name, email, password, navigation) => async (
   try {
     const res = await axios.post(`${SERVER_URL}/api/users`, body, config);
 
-    await AsyncStorage.setItem('token', res.data.token);
+    await AsyncStorage.setItem("token", res.data.token);
 
     dispatch({
       type: REGISTRATION_SUCCESSSFUL,
       payload: res.data.token,
     });
 
-    dispatch(showAlert('Registration successful'));
+    dispatch(showAlert("Registration successful"));
 
-    navigation.navigate('Login');
+    navigation.navigate("Login");
   } catch (err) {
     dispatch({ type: USER_ERROR });
     dispatch(showAlert(err.message));
