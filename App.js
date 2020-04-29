@@ -8,7 +8,7 @@ import Dashboard from "./src/components/screens/Dashboard";
 import AddKroo from "./src/components/screens/AddKroo";
 import { Provider } from "react-redux";
 import store from "./src/store";
-import ChatList from "./src/components/screens/chatcomponent/ChatList";
+import ChatList from "./src/components/screens/ChatList";
 
 const Stack = createStackNavigator();
 

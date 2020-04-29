@@ -1,22 +1,22 @@
-import React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import Colors from "../../../constants/colors";
-import { CoinBar } from "../../screens/homecomponents/CoinBar";
-import { Ranking } from "../../screens/homecomponents/Ranking";
-import { UserHistory } from "../../screens/historycomponent/UserHistory";
+import React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import Colors from '../../../constants/colors';
+// import { CoinBar } from "../../screens/homecomponents/CoinBar";
+// import { Ranking } from '../../screens/homecomponents/Ranking';
+import { UserHistory } from '../../screens/historycomponent/UserHistory';
 
 const History = ({ auth }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.topContainer}>
+      {/* <View style={styles.topContainer}>
         <CoinBar auth={auth} />
-      </View>
+      </View> */}
       <View style={styles.middleContainer}>
         <UserHistory />
       </View>
-      <View style={styles.bottomcontainer}>
+      {/* <View style={styles.bottomcontainer}>
         <Ranking />
-      </View>
+      </View> */}
 
       {/* <Text>{auth.displayName}</Text> */}
     </View>
@@ -26,23 +26,23 @@ const History = ({ auth }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: 5,
   },
   topContainer: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingVertical: 3,
   },
   middleContainer: {
     flex: 3,
-    flexDirection: "row",
+    flexDirection: 'row',
     backgroundColor: Colors.lightBlack,
   },
   bottomcontainer: {
     flex: 2,
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingVertical: 3,
   },
 });

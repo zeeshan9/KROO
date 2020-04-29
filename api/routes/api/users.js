@@ -1,21 +1,21 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const firebase = require('../../config/firebase');
+const { check, validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const firebase = require("../../config/firebase");
 
 // @route   POST /api/users
 // @desc    Register a user
 // @access  Public
 router.post(
-  '/',
+  "/",
   [
-    check('name', 'Name is required').not().isEmpty(),
-    check('email', 'Email is required and must be valid').isEmail(),
+    check("name", "Name is required").not().isEmpty(),
+    check("email", "Email is required and must be valid").isEmail(),
     check(
-      'password',
-      'Password is required and must be atleast 6 characters'
+      "password",
+      "Password is required and must be atleast 6 characters"
     ).isLength({ min: 6 }),
   ],
   async (req, res) => {
@@ -36,7 +36,7 @@ router.post(
 
       await firebase
         .firestore()
-        .collection('users')
+        .collection("users")
         .doc(user.uid)
         .set({
           password: await bcrypt.hash(password, salt),
@@ -51,7 +51,7 @@ router.post(
 
       jwt.sign(
         payload,
-        'T8jBGxyeBCTm21ixS3Jx',
+        "T8jBGxyeBCTm21ixS3Jx",
         {
           expiresIn: 3600,
         },

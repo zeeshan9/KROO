@@ -53,7 +53,7 @@ export const getAllKroos = () => async (dispatch) => {
 
     const res = await axios.get(`${SERVER_URL}/api/kroos`, config);
 
-    console.log(res.data);
+    // console.log(res.data);
 
     dispatch({
       type: ALL_KROOS_LOADED,

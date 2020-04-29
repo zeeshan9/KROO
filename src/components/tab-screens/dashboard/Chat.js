@@ -1,16 +1,9 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import Colors from "../../../constants/colors";
-import { CoinBar } from "../../screens/homecomponents/CoinBar";
+// import { CoinBar } from "../../screens/homecomponents/CoinBar";
 import ChatGroups from "../../screens/chatcomponent/ChatGroups";
-import { Ranking } from "../../screens/homecomponents/Ranking";
+// import { Ranking } from '../../screens/homecomponents/Ranking';
 
 const Chat = ({ auth, navigation }) => {
   const SampleFunction = () => {
@@ -26,9 +19,9 @@ const Chat = ({ auth, navigation }) => {
       <View style={styles.middleContainer}>
         <ChatGroups navigation={navigation} />
       </View>
-      <View style={styles.bottomcontainer}>
+      {/* <View style={styles.bottomcontainer}>
         <Ranking />
-      </View>
+      </View> */}
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={() => SampleFunction()}

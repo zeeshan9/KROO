@@ -9,15 +9,13 @@ import { showAlert } from "../../../actions/alert";
 
 const ChatGroups = ({
   navigation,
-  kroo: { allKroosGroup },
+  kroo: { allKroosGroup, loading },
   showAlert,
   getAllKroos,
 }) => {
   useEffect(() => {
-    console.log("i am here");
     getAllKroos();
-    console.log(" nowi am here");
-  }, [getAllKroos]);
+  }, [getAllKroos, loading]);
 
   const list = [
     {
@@ -43,7 +41,7 @@ const ChatGroups = ({
       }}
       bottomDivider
       chevron
-      onPress={(item) => navigation.navigate("ChatList", item)}
+      onPress={() => navigation.navigate("ChatList", { itemId: item.id })}
     />
   );
 
@@ -51,7 +49,7 @@ const ChatGroups = ({
   return (
     // <View>
 
-    // allKroosGroup.length > 0
+    // ! loading && allKroosGroup.length > 0b
     //   ? allKroosGroup.map((kroo) => {
     <FlatList
       keyExtractor={keyExtractor}
