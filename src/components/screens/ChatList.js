@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import socketIOClient from 'socket.io-client';
 import { SERVER_URL } from '../../actions/types';
 import uuid from 'uuid';
-import { sendMessage } from '../../actions/messages';
+import { sendMessage, getAllMessagesForKroo } from '../../actions/messages';
 import {
   View,
   Text,
@@ -19,6 +19,7 @@ const ChatList = ({
   auth,
   sendMessage,
   message: { loading, messages },
+  getAllMessagesForKroo,
 }) => {
   const [socket, setSocket] = useState(null);
 
@@ -36,29 +37,20 @@ const ChatList = ({
         room: itemId,
       });
 
-      // Display message that the other user has joined the chat
-      socket.on('joinRoom', (message) => {
-        sendMessage(message);
-        // console.log(messages);
-      });
+      getAllMessagesForKroo(itemId);
+
+      // // Display message that the other user has joined the chat
+      // socket.on('joinRoom', (message) => {
+      //   sendMessage(message);
+      //   // console.log(messages);
+      // });
 
       // When a message is received display it in the message box
-      socket.on('message', ({ user, message }) => {
-        // console.log('\nMessages ab yeh ha:');
-        // console.log(messages);
+      socket.on('message', ({}) => {
+        getAllMessagesForKroo(itemId);
       });
     }
   }, [socket]);
-
-  const sendMessage1 = (messagesArray) => {
-    const { itemId } = route.params;
-
-    socket.emit('message', {
-      room: itemId,
-      user: auth.user.displayName,
-      message: messagesArray[0].text,
-    });
-  };
 
   return (
     <View style={styles.container}>
@@ -90,9 +82,8 @@ const ChatList = ({
               room: itemId,
               user: auth.user.displayName,
               message,
+              createdAt: Date.now(),
             });
-
-            sendMessage(message, auth.user.displayName);
 
             setMessage('');
           }}
@@ -148,6 +139,7 @@ ChatList.propTypes = {
   auth: PropTypes.object.isRequired,
   sendMessage: PropTypes.func.isRequired,
   message: PropTypes.object.isRequired,
+  getAllMessagesForKroo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -157,4 +149,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   sendMessage,
+  getAllMessagesForKroo,
 })(ChatList);
