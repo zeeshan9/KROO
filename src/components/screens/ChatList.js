@@ -6,7 +6,7 @@ import socketIOClient from "socket.io-client";
 import { View, Text } from "react-native";
 import { SERVER_URL } from "../../actions/types";
 import { showAlert } from "../../actions/alert";
-import { ChatUi } from "./ChatUi";
+// import { ChatUi } from "./ChatUi";
 
 const ChatList = ({ route, navigation, auth: { loading, user } }) => {
   const [socket, setSocket] = useState(null);

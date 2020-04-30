@@ -40,7 +40,17 @@ const ChatGroups = ({
         title: item.name[0],
       }}
       bottomDivider
-      chevron
+      chevron={{ color: "white" }}
+      friction={90}
+      activeScale={0.95}
+      tension={100}
+      titleStyle={{ color: "#F5F5F5", fontWeight: "bold" }}
+      subtitleStyle={{ color: "#F5F5F5" }}
+      linearGradientProps={{
+        colors: ["#787878", "#909090"],
+        start: { x: 1, y: 0 },
+        end: { x: 0.2, y: 0 },
+      }}
       onPress={() => navigation.navigate("ChatList", { itemId: item.id })}
     />
   );

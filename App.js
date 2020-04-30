@@ -9,7 +9,8 @@ import AddKroo from "./src/components/screens/AddKroo";
 import { Provider } from "react-redux";
 import store from "./src/store";
 import ChatList from "./src/components/screens/ChatList";
-
+import { IMAGE } from "./src/constants/Images";
+import Colors from "./src/constants/colors";
 const Stack = createStackNavigator();
 
 const title = "KROO";
@@ -28,17 +29,47 @@ const App = () => {
           <Stack.Screen
             name='Dashboard'
             component={Dashboard}
-            options={{ title, headerLeft: null }}
+            options={{
+              title,
+              headerLeft: null,
+              headerStyle: {
+                backgroundColor: Colors.headerColor,
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
           />
           <Stack.Screen
             name='ChatList'
             component={ChatList}
-            options={{ title, headerLeft: null }}
+            options={{
+              title,
+              // headerLeft: null,
+              headerStyle: {
+                backgroundColor: Colors.headerColor,
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
           />
           <Stack.Screen
             name='AddKroo'
             component={AddKroo}
-            options={{ title, headerLeft: null }}
+            options={{
+              title,
+              headerLeft: null,
+              headerStyle: {
+                backgroundColor: Colors.headerColor,
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

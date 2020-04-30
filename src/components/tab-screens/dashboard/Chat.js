@@ -4,7 +4,7 @@ import Colors from "../../../constants/colors";
 // import { CoinBar } from "../../screens/homecomponents/CoinBar";
 import ChatGroups from "../../screens/chatcomponent/ChatGroups";
 // import { Ranking } from '../../screens/homecomponents/Ranking';
-
+import { IMAGE } from "../../../constants/Images";
 const Chat = ({ auth, navigation }) => {
   const SampleFunction = () => {
     // Alert.alert("Floating Button Clicked");
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-    padding: 5,
+    // padding: 1,
   },
   topContainer: {
     flex: 1,
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     flex: 2,
     flexDirection: "row",
     backgroundColor: Colors.lightBlack,
+    padding: 5,
   },
   bottomcontainer: {
     flex: 1,
