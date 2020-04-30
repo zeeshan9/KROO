@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import CoinBar from "../../layout/home-components/CoinBar";
 import ProfileBox from "../../layout/home-components/ProfileBox";
-// import { Ranking } from '../../screens/homecomponents/Ranking';
+import { Ranking } from "../../layout/home-components/Ranking";
 import Colors from "../../../constants/colors";
 import ShareApp from "../../layout/home-components/ShareApp";
 
@@ -17,9 +17,10 @@ const Home = ({ auth }) => {
       <View style={styles.middleContainer}>
         <ProfileBox auth={auth} />
       </View>
+
+      {/* <View style={styles.bottomcontainer}><ShareApp /></View> */}
       <View style={styles.bottomcontainer}>
-        <ShareApp />
-        {/* <Ranking /> */}
+        <Ranking />
       </View>
     </View>
   );
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
   bottomcontainer: {
     flex: 1,
     flexDirection: "row",
+    marginVertical: 2,
   },
 });
 

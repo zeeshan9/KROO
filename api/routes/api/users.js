@@ -3,6 +3,7 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const auth = require("../../middleware/auth");
 const firebase = require("../../config/firebase");
 
 // @route   POST /api/users
@@ -65,5 +66,30 @@ router.post(
     }
   }
 );
+
+// @route   GET /api/users
+// @desc    Get all users
+// @access  Private
+router.get("/", auth, async (req, res) => {
+  try {
+    const usersCollection = await firebase
+      .firestore()
+      .collection("users")
+      .get();
+
+    const users = [];
+
+    usersCollection.forEach((user) => {
+      users.push({
+        id: user.id,
+        name: user.data().name,
+      });
+    });
+
+    res.json(users);
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
+  }
+});
 
 module.exports = router;

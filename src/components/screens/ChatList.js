@@ -17,6 +17,7 @@ import {
 } from "react-native";
 import { ListItem } from "react-native-elements";
 import { FlatList } from "react-native-gesture-handler";
+import { IMAGE } from "../../constants/Images";
 
 const ChatList = ({
   route,
@@ -109,6 +110,8 @@ const ChatList = ({
       {!loading && messages.length > 0 ? (
         <FlatList
           style={styles.list}
+          // inverted={-1}
+          initialScrollIndex={messages.length - 1}
           keyExtractor={keyExtractor}
           data={messages}
           renderItem={({ item }) => {
@@ -160,12 +163,7 @@ const ChatList = ({
           }}
           style={styles.btnSend}
         >
-          <Image
-            source={{
-              uri: "https://png.icons8.com/small/75/ffffff/filled-sent.png",
-            }}
-            style={styles.iconSend}
-          />
+          <Image source={IMAGE.ICON_MESSAGE} style={styles.iconSend} />
         </TouchableOpacity>
       </View>
     </View>
@@ -222,6 +220,7 @@ const styles = StyleSheet.create({
   // chat ui
   list: {
     paddingHorizontal: 2,
+    marginHorizontal: 5,
   },
   footer: {
     flexDirection: "row",
@@ -231,7 +230,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   btnSend: {
-    backgroundColor: "#00BFFF",
+    backgroundColor: "white",
     width: 40,
     height: 40,
     borderRadius: 360,
