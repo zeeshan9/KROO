@@ -1,12 +1,11 @@
 import {
-  KROO_ADDED_SUCCESSFULLY,
-  KROO_ERROR,
-  ALL_KROOS_LOADED,
+  ALL_MESSAGES_LOADED,
+  MESSAGE_ERROR,
+  MESSAGE_SENT,
 } from '../actions/types';
 
 const initialState = {
-  krooGroup: null,
-  allKroosGroup: [],
+  messages: [],
   loading: true,
 };
 
@@ -14,19 +13,19 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case ALL_KROOS_LOADED:
+    case ALL_MESSAGES_LOADED:
       return {
         ...state,
-        allKroosGroup: payload, //[...state.allKroosGroup, payload],
+        messages: payload,
         loading: false,
       };
-    case KROO_ADDED_SUCCESSFULLY:
+    case MESSAGE_SENT:
       return {
         ...state,
-        krooGroup: payload,
         loading: false,
+        messages: [...state.messages, payload],
       };
-    case KROO_ERROR:
+    case MESSAGE_ERROR:
       return {
         ...state,
         loading: false,
