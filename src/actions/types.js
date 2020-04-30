@@ -1,6 +1,6 @@
 // Server address
-// export const SERVER_URL = "http://192.168.100.52:5000";
-export const SERVER_URL = 'http://192.168.1.13:5000';
+export const SERVER_URL = 'http://192.168.100.52:5000';
+// export const SERVER_URL = 'http://192.168.1.13:5000';
 
 // User
 export const REGISTRATION_SUCCESSSFUL = 'REGISTRATION_SUCCESSSFUL';

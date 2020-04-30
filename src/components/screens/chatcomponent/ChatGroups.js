@@ -29,6 +29,9 @@ const ChatGroups = ({
             navigation.navigate('ChatList', { itemId: item.id });
           },
         },
+        {
+          text: "closed",
+        },
       ]);
     } else {
       navigation.navigate('ChatList', { itemId: item.id });

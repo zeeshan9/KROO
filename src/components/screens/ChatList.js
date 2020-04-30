@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import socketIOClient from 'socket.io-client';
 import { SERVER_URL } from '../../actions/types';
-import uuid from 'uuid';
+
 import { sendMessage, getAllMessagesForKroo } from '../../actions/messages';
 import {
   View,
@@ -99,36 +99,41 @@ const ChatList = ({
       onPress={() => onPress(item)}
     />
   );
+  const renderDate = (date) => {
+    return <Text style={styles.time}>{date}</Text>;
+  };
   const keyExtractor = (item, index) => index.toString();
 
   return (
     <View style={styles.container}>
-      {/* <ChatUi messages={messages} /> */}
-      <View style={styles.messagesContainer}>
-        <ScrollView style={styles.list}>
-          {!loading && messages.length > 0 ? (
-            <FlatList
-              keyExtractor={keyExtractor}
-              data={messages}
-              renderItem={renderItem}
-            />
-          ) : (
-            // messages.map((message) => (
-            //   <View style={[styles.item, styles.itemIn]}>
-            //     <View style={[styles.balloon]}>
-            //       <Text style={styles.messageText}>
-            //         {message.user !== null ? `${message.user}: ` : ''}{' '}
-            //         {message.message}
-            //       </Text>
-            //     </View>
-            //   </View>
-            // ))
-            <Text style={styles.messageText}>
-              Chat not has started Chat yet,Do you want the first one to start
-            </Text>
-          )}
-        </ScrollView>
-      </View>
+      {!loading && messages.length > 0 ? (
+        <FlatList
+          style={styles.list}
+          keyExtractor={keyExtractor}
+          data={messages}
+          renderItem={({ item }) => {
+            // console.log(item + " item");
+            // const item = message.item;
+            // let inMessage = item.type === "in";
+            let itemStyle = styles.itemIn; //inMessage ? styles.itemIn : styles.itemOut;
+            return (
+              <View style={[styles.item, itemStyle]}>
+                {/* <Text style={styles.time}>02:23:date</Text> */}
+                {/* {!inMessage && this.renderDate(item.date)} */}
+                <View style={[styles.balloon]}>
+                  <Text>{item.message}</Text>
+                </View>
+                <Text style={styles.time}>02:23:date</Text>
+                {/* {inMessage && this.renderDate(item.date)} */}
+              </View>
+            );
+          }}
+        />
+      ) : (
+        <Text style={styles.container}>
+          Chat not has started Chat yet,Do you want the first one to start
+        </Text>
+      )}
       <View style={styles.footer}>
         <View style={styles.inputContainer}>
           <TextInput
@@ -172,8 +177,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'silver',
     // justifyContent: "center",
-    padding: 10,
-    flexDirection: 'column',
+    // padding: 10,
+    // flexDirection: "column",
   },
   textInput: {
     flex: 4,
@@ -256,9 +261,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   balloon: {
-    maxWidth: 250,
+    maxWidth: 200,
     padding: 15,
     borderRadius: 20,
+    borderTopRightRadius: 2,
   },
   itemIn: {
     alignSelf: 'flex-start',
@@ -277,8 +283,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#eeeeee',
-    borderRadius: 200,
-    padding: 2,
+    borderRadius: 50,
+    // borderTopRightRadius: 25,
+    // borderBottomEndRadius: 25,
+    // borderTopStartRadius: 20,
+    padding: 0,
   },
 });
 
