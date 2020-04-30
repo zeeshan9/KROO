@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import { ListItem, ButtonGroup } from "react-native-elements";
 import { FlatList } from "react-native-gesture-handler";
 import PropTypes from "prop-types";
@@ -17,23 +17,18 @@ const ChatGroups = ({
     getAllKroos();
   }, [getAllKroos, loading]);
 
-  const list = [
-    {
-      name: "Kroo Group",
-      subtitle: "want to to be Motivational join our group",
-    },
-    {
-      name: "zeeshan Group",
-      avatar_url:
-        "https://www.google.com/search?q=harry+potter&safe=active&rlz=1C1CHBF_enPK831PK831&sxsrf=ALeKk02x3RBhsAVZBc0BRO1iE7q1dYnWZQ:1587893508847&source=lnms&tbm=isch&sa=X&ved=2ahUKEwj3uaSk5IXpAhWx4YUKHXVqBn4Q_AUoAXoECBkQAw&biw=1366&bih=625#imgrc=4xE0oIbyljrGeM", //IMAGE.ICON_PROFILE, //<Image style={styles.iconLogo} source={IMAGE.ICON_PROFILE} />,
-      subtitle: "this is a our freind group",
-    },
-    // more items
-  ];
-  const [selectedIndex, setselectedIndex] = useState({ selectedIndex: 1 });
-
-  const onPress = () => {};
-  const buttons = ["Hello", "World"];
+  const onPress = (item) => {
+    if (true) {
+      Alert.alert("JOIN ROOM", "DO you want to join the room", [
+        {
+          text: "Join",
+          onPress: () => navigation.navigate("ChatList", { itemId: item.id }),
+        },
+      ]);
+    } else {
+      navigation.navigate("ChatList", { itemId: item.id });
+    }
+  };
 
   const renderItem = ({ item }) => (
     <ListItem
@@ -52,17 +47,17 @@ const ChatGroups = ({
       //     containerStyle={{ height: 100 }}
       //   />
       // }
-      badge={{
-        value: "Join",
-        textStyle: {
-          color: "white",
-          fontSize: 20,
-          borderRadius: 10,
-          backgroundColor: "silver",
-          elevation: 10,
-        },
-        containerStyle: { margin: 5, padding: 5 },
-      }}
+      // badge={{
+      //   value: "Join",
+      //   textStyle: {
+      //     color: "white",
+      //     fontSize: 20,
+      //     borderRadius: 10,
+      //     backgroundColor: "silver",
+      //     elevation: 10,
+      //   },
+      //   containerStyle: { margin: 5, padding: 5 },
+      // }}
       chevron={{ color: "white" }}
       friction={90}
       activeScale={0.95}
@@ -74,7 +69,7 @@ const ChatGroups = ({
         start: { x: 1, y: 0 },
         end: { x: 0.2, y: 0 },
       }}
-      onPress={() => navigation.navigate("ChatList", { itemId: item.id })}
+      onPress={() => onPress(item)}
     />
   );
 
