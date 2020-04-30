@@ -12,9 +12,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  FlatList,
+  // FlatList,
   Image,
 } from 'react-native';
+import { ListItem } from 'react-native-elements';
+import { FlatList } from 'react-native-gesture-handler';
 
 const ChatList = ({
   route,
@@ -55,23 +57,72 @@ const ChatList = ({
     }
   }, [socket]);
 
+  const renderItem = ({ item }) => (
+    <ListItem
+      title={item.user}
+      subtitle={item.message}
+      // leftAvatar={{
+      //   source: item.avatar_url && { uri: item.avatar_url },
+      //   title: item.name[0],
+      // }}
+      bottomDivider
+      // rightComponent={
+      //   <ButtonGroup
+      //     onPress={updateIndex}
+      //     selectedIndex={selectedIndex}
+      //     buttons={buttons}
+      //     containerStyle={{ height: 100 }}
+      //   />
+      // }
+      // badge={{
+      //   value: "Join",
+      //   textStyle: {
+      //     color: "white",
+      //     fontSize: 20,
+      //     borderRadius: 10,
+      //     backgroundColor: "silver",
+      //     elevation: 10,
+      //   },
+      //   containerStyle: { margin: 5, padding: 5 },
+      // }}
+      chevron={{ color: 'white' }}
+      friction={90}
+      activeScale={0.95}
+      tension={100}
+      titleStyle={{ color: '#F5F5F5', fontWeight: 'bold' }}
+      subtitleStyle={{ color: '#F5F5F5' }}
+      linearGradientProps={{
+        colors: ['#787878', '#909090'],
+        start: { x: 1, y: 0 },
+        end: { x: 0.2, y: 0 },
+      }}
+      onPress={() => onPress(item)}
+    />
+  );
+  const keyExtractor = (item, index) => index.toString();
+
   return (
     <View style={styles.container}>
       {/* <ChatUi messages={messages} /> */}
       <View style={styles.messagesContainer}>
         <ScrollView style={styles.list}>
           {!loading && messages.length > 0 ? (
-            messages.map((message) => (
-              <View style={[styles.item, styles.itemIn]}>
-                <View style={[styles.balloon]}>
-                  <Text style={styles.messageText}>
-                    {message.user !== null ? `${message.user}: ` : ''}{' '}
-                    {message.message}
-                  </Text>
-                </View>
-              </View>
-            ))
+            <FlatList
+              keyExtractor={keyExtractor}
+              data={messages}
+              renderItem={renderItem}
+            />
           ) : (
+            // messages.map((message) => (
+            //   <View style={[styles.item, styles.itemIn]}>
+            //     <View style={[styles.balloon]}>
+            //       <Text style={styles.messageText}>
+            //         {message.user !== null ? `${message.user}: ` : ''}{' '}
+            //         {message.message}
+            //       </Text>
+            //     </View>
+            //   </View>
+            // ))
             <Text style={styles.messageText}>
               Chat not has started Chat yet,Do you want the first one to start
             </Text>

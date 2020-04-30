@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, Alert } from "react-native";
-import { ListItem, ButtonGroup } from "react-native-elements";
-import { FlatList } from "react-native-gesture-handler";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { getAllKroos } from "../../../actions/kroo";
-import { showAlert } from "../../../actions/alert";
+import React, { useEffect, useState } from 'react';
+import { View, Text, Alert } from 'react-native';
+import { ListItem, ButtonGroup } from 'react-native-elements';
+import { FlatList } from 'react-native-gesture-handler';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getAllKroos, addMember } from '../../../actions/kroo';
+import { showAlert } from '../../../actions/alert';
 
 const ChatGroups = ({
   navigation,
   kroo: { allKroosGroup, loading },
   showAlert,
   getAllKroos,
+  addMember,
+  auth,
 }) => {
   useEffect(() => {
     getAllKroos();
@@ -19,14 +21,17 @@ const ChatGroups = ({
 
   const onPress = (item) => {
     if (true) {
-      Alert.alert("JOIN ROOM", "DO you want to join the room", [
+      Alert.alert('JOIN ROOM', 'DO you want to join the room', [
         {
-          text: "Join",
-          onPress: () => navigation.navigate("ChatList", { itemId: item.id }),
+          text: 'Join',
+          onPress: () => {
+            addMember(item.id, auth.user.id);
+            navigation.navigate('ChatList', { itemId: item.id });
+          },
         },
       ]);
     } else {
-      navigation.navigate("ChatList", { itemId: item.id });
+      navigation.navigate('ChatList', { itemId: item.id });
     }
   };
 
@@ -58,14 +63,14 @@ const ChatGroups = ({
       //   },
       //   containerStyle: { margin: 5, padding: 5 },
       // }}
-      chevron={{ color: "white" }}
+      chevron={{ color: 'white' }}
       friction={90}
       activeScale={0.95}
       tension={100}
-      titleStyle={{ color: "#F5F5F5", fontWeight: "bold" }}
-      subtitleStyle={{ color: "#F5F5F5" }}
+      titleStyle={{ color: '#F5F5F5', fontWeight: 'bold' }}
+      subtitleStyle={{ color: '#F5F5F5' }}
       linearGradientProps={{
-        colors: ["#787878", "#909090"],
+        colors: ['#787878', '#909090'],
         start: { x: 1, y: 0 },
         end: { x: 0.2, y: 0 },
       }}
@@ -111,10 +116,15 @@ ChatGroups.propTypes = {
   navigation: PropTypes.object.isRequired,
   showAlert: PropTypes.func.isRequired,
   getAllKroos: PropTypes.func.isRequired,
+  addMember: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   kroo: state.kroo,
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getAllKroos, showAlert })(ChatGroups);
+export default connect(mapStateToProps, { getAllKroos, showAlert, addMember })(
+  ChatGroups
+);

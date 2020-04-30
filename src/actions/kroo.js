@@ -3,21 +3,22 @@ import {
   KROO_ADDED_SUCCESSFULLY,
   KROO_ERROR,
   ALL_KROOS_LOADED,
-} from "./types";
-import { showAlert } from "./alert";
-import axios from "axios";
-import { AsyncStorage } from "react-native";
+  KROO_MEMBER_ADDED,
+} from './types';
+import { showAlert } from './alert';
+import axios from 'axios';
+import { AsyncStorage } from 'react-native';
 
 // This function is used to add a kroo group
 export const krooAdded = (name, description, navigation) => async (
   dispatch
 ) => {
-  const token = await AsyncStorage.getItem("token");
+  const token = await AsyncStorage.getItem('token');
 
   const config = {
     headers: {
-      "x-auth-token": token,
-      "Content-Type": "application/json",
+      'x-auth-token': token,
+      'Content-Type': 'application/json',
     },
   };
 
@@ -31,9 +32,9 @@ export const krooAdded = (name, description, navigation) => async (
       payload: res.data,
     });
 
-    dispatch(showAlert("Kroo Added Succesfully"));
+    dispatch(showAlert('Kroo Added Succesfully'));
 
-    navigation.navigate("Chat");
+    navigation.navigate('Chat');
   } catch (err) {
     dispatch({ type: KROO_ERROR });
     dispatch(showAlert(err.message));
@@ -43,11 +44,11 @@ export const krooAdded = (name, description, navigation) => async (
 // This function is used to load the all the kroo
 export const getAllKroos = () => async (dispatch) => {
   try {
-    const token = await AsyncStorage.getItem("token");
+    const token = await AsyncStorage.getItem('token');
 
     const config = {
       headers: {
-        "x-auth-token": token,
+        'x-auth-token': token,
       },
     };
 
@@ -61,5 +62,43 @@ export const getAllKroos = () => async (dispatch) => {
     });
   } catch (err) {
     dispatch({ type: KROO_ERROR });
+  }
+};
+
+export const addMember = (krooId, userId) => async (dispatch) => {
+  const token = await AsyncStorage.getItem('token');
+
+  const config = {
+    headers: {
+      'x-auth-token': token,
+    },
+  };
+
+  try {
+    await axios.put(
+      `${SERVER_URL}/api/kroos/member/add/${krooId}/${userId}`,
+      {},
+      config
+    );
+
+    dispatch({ type: KROO_MEMBER_ADDED });
+  } catch (err) {
+    dispatch({ type: KROO_ERROR });
+  }
+};
+
+export const loadKrooRanking = () => async (dispatch) => {
+  console.log('call hota ha');
+  try {
+    const res = await axios.get(`${SERVER_URL}/api/kroos/ranking`);
+    console.log(res.data);
+
+    dispatch({
+      type: ALL_KROOS_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({ type: KROO_ERROR });
+    console.log(err);
   }
 };

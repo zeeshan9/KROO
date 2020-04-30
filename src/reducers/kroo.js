@@ -17,7 +17,7 @@ export default function (state = initialState, action) {
     case ALL_KROOS_LOADED:
       return {
         ...state,
-        allKroosGroup: payload, //[...state.allKroosGroup, payload],
+        allKroosGroup: payload,
         loading: false,
       };
     case KROO_ADDED_SUCCESSFULLY:
@@ -31,6 +31,7 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
       };
+    case KROO_ADDED_SUCCESSFULLY:
     default:
       return state;
   }

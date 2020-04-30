@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { StyleSheet, View } from "react-native";
-import { connect } from "react-redux";
-import CoinBar from "../../layout/home-components/CoinBar";
-import ProfileBox from "../../layout/home-components/ProfileBox";
-// import { Ranking } from '../../screens/homecomponents/Ranking';
-import Colors from "../../../constants/colors";
-import ShareApp from "../../layout/home-components/ShareApp";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { StyleSheet, View } from 'react-native';
+import { connect } from 'react-redux';
+import CoinBar from '../../layout/home-components/CoinBar';
+import ProfileBox from '../../layout/home-components/ProfileBox';
+import Ranking from '../../layout/home-components/Ranking';
+import Colors from '../../../constants/colors';
+import ShareApp from '../../layout/home-components/ShareApp';
 
 const Home = ({ auth }) => {
   return (
@@ -18,8 +18,8 @@ const Home = ({ auth }) => {
         <ProfileBox auth={auth} />
       </View>
       <View style={styles.bottomcontainer}>
-        <ShareApp />
-        {/* <Ranking /> */}
+        <Ranking />
+        {/* <ShareApp /> */}
       </View>
     </View>
   );
@@ -36,12 +36,12 @@ const styles = StyleSheet.create({
   },
   middleContainer: {
     flex: 4,
-    flexDirection: "row",
+    flexDirection: 'row',
     backgroundColor: Colors.lightBlack,
+    marginBottom: 2,
   },
   bottomcontainer: {
-    flex: 1,
-    flexDirection: "row",
+    flex: 3,
   },
 });
 

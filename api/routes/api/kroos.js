@@ -4,6 +4,33 @@ const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const firebase = require('../../config/firebase');
 
+// @route   GET /api/kroos/ranking
+// @desc    Get top 5 kroos
+// @access  Public
+router.get('/ranking', async (req, res) => {
+  try {
+    const kroosCollection = await firebase
+      .firestore()
+      .collection('kroos')
+      .orderBy('points', 'desc')
+      .limit(5)
+      .get();
+
+    const kroos = [];
+
+    kroosCollection.forEach((kroo) => {
+      kroos.push({
+        name: kroo.data().name,
+        points: kroo.data().points,
+      });
+    });
+
+    res.json(kroos);
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
+  }
+});
+
 // @route   GET /api/kroos/messages/:id
 // @desc    Get all messages in a kroo
 // @access  Private
@@ -147,6 +174,7 @@ router.post(
         admin: req.user.id,
         name,
         description,
+        points: 0,
       });
 
       kroo = await kroo.get();
@@ -179,8 +207,14 @@ router.put('/member/add/:kroo_id/:user_id', auth, async (req, res) => {
     let count = 0;
     members.forEach((member) => count++);
 
-    if (count > 0) {
-      return res.status(400).json({ msg: 'Already a member' });
+    const kroo = await firebase
+      .firestore()
+      .collection('kroos')
+      .doc(req.params.kroo_id)
+      .get();
+
+    if (count > 0 || kroo.data().admin === req.user.id) {
+      return res.status(400).json({ msg: 'Bad request' });
     }
 
     await firebase
@@ -190,6 +224,17 @@ router.put('/member/add/:kroo_id/:user_id', auth, async (req, res) => {
       .collection('members')
       .add({
         user: req.params.user_id,
+      });
+
+    await firebase
+      .firestore()
+      .collection('kroos')
+      .doc(req.params.kroo_id)
+      .set({
+        admin: kroo.data().admin,
+        name: kroo.data().name,
+        description: kroo.data().description,
+        points: kroo.data().points + 4,
       });
 
     const adminId = await (
@@ -209,6 +254,7 @@ router.put('/member/add/:kroo_id/:user_id', auth, async (req, res) => {
       .collection('users')
       .doc(adminId)
       .set({
+        name: user.name,
         password: user.password,
         points: user.points + 4,
       });
