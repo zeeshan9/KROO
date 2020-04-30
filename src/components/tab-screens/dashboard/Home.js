@@ -39,11 +39,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: Colors.lightBlack,
   },
-  // bottomcontainer: {
-  //   flex: 2,
-  //   flexDirection: 'row',
-  //   paddingVertical: 3,
-  // },
+  bottomcontainer: {
+    flex: 1,
+    flexDirection: "row",
+  },
 });
 
 Home.propTypes = {

@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from '../tab-screens/dashboard/Home';
-import Chat from '../tab-screens/dashboard/Chat';
-import Messages from '../tab-screens/dashboard/Messages';
-import Notification from '../tab-screens/dashboard/Notification';
-import History from '../tab-screens/dashboard/History';
-import { Image } from 'react-native';
-import { IMAGE } from '../../constants/Images';
-import { connect } from 'react-redux';
-import { loadUser } from '../../actions/auth';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Home from "../tab-screens/dashboard/Home";
+import Chat from "../tab-screens/dashboard/Chat";
+import Messages from "../tab-screens/dashboard/Messages";
+import Notification from "../tab-screens/dashboard/Notification";
+import History from "../tab-screens/dashboard/History";
+import { Image } from "react-native";
+import { IMAGE } from "../../constants/Images";
+import { connect } from "react-redux";
+import { loadUser } from "../../actions/auth";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,30 +21,33 @@ const Dashboard = ({ loadUser }) => {
   return (
     <Tab.Navigator
       initialRouteName='Home'
+      activeColor='#f0edf6'
+      inactiveColor='#3e2465'
+      barStyle={{ backgroundColor: "#694fad" }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'Home') {
+          if (route.name === "Home") {
             iconName = focused ? IMAGE.ICON_HOME : IMAGE.ICON_HOMECOLOR; //"home" : "home-outline";
 
             return (
               <Image source={iconName} style={{ width: 20, height: 20 }} />
             );
-          } else if (route.name === 'Chat') {
+          } else if (route.name === "Chat") {
             iconName = focused ? IMAGE.ICON_SPEECH : IMAGE.ICON_CHAT;
 
             return (
               <Image source={iconName} style={{ width: 20, height: 20 }} />
             );
-          } else if (route.name === 'Messages') {
+          } else if (route.name === "Messages") {
             iconName = focused ? IMAGE.ICON_EMAIL2 : IMAGE.ICON_Email1;
 
             return (
               <Image source={iconName} style={{ width: 20, height: 20 }} />
             );
-          } else if (route.name === 'Notification') {
-            iconName = 'handshake';
+          } else if (route.name === "Notification") {
+            iconName = "handshake";
 
             return focused ? (
               <Image
@@ -57,8 +60,8 @@ const Dashboard = ({ loadUser }) => {
                 style={{ width: 20, height: 20 }}
               />
             );
-          } else if (route.name === 'History') {
-            iconName = 'clock';
+          } else if (route.name === "History") {
+            iconName = "clock";
 
             return focused ? (
               <Image
@@ -75,8 +78,8 @@ const Dashboard = ({ loadUser }) => {
         },
       })}
       tabBarOptions={{
-        activeBackgroundColor: '#0066cc',
-        activeTintColor: 'white',
+        activeBackgroundColor: "#0066cc",
+        activeTintColor: "white",
       }}
     >
       <Tab.Screen name='Home' component={Home} />

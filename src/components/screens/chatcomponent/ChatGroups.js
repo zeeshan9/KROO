@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { View, Text, Button } from "react-native";
-import { ListItem } from "react-native-elements";
+import React, { useEffect, useState } from "react";
+import { View, Text } from "react-native";
+import { ListItem, ButtonGroup } from "react-native-elements";
 import { FlatList } from "react-native-gesture-handler";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -30,6 +30,10 @@ const ChatGroups = ({
     },
     // more items
   ];
+  const [selectedIndex, setselectedIndex] = useState({ selectedIndex: 1 });
+
+  const onPress = () => {};
+  const buttons = ["Hello", "World"];
 
   const renderItem = ({ item }) => (
     <ListItem
@@ -40,7 +44,36 @@ const ChatGroups = ({
         title: item.name[0],
       }}
       bottomDivider
-      chevron
+      // rightComponent={
+      //   <ButtonGroup
+      //     onPress={updateIndex}
+      //     selectedIndex={selectedIndex}
+      //     buttons={buttons}
+      //     containerStyle={{ height: 100 }}
+      //   />
+      // }
+      badge={{
+        value: "Join",
+        textStyle: {
+          color: "white",
+          fontSize: 20,
+          borderRadius: 10,
+          backgroundColor: "silver",
+          elevation: 10,
+        },
+        containerStyle: { margin: 5, padding: 5 },
+      }}
+      chevron={{ color: "white" }}
+      friction={90}
+      activeScale={0.95}
+      tension={100}
+      titleStyle={{ color: "#F5F5F5", fontWeight: "bold" }}
+      subtitleStyle={{ color: "#F5F5F5" }}
+      linearGradientProps={{
+        colors: ["#787878", "#909090"],
+        start: { x: 1, y: 0 },
+        end: { x: 0.2, y: 0 },
+      }}
       onPress={() => navigation.navigate("ChatList", { itemId: item.id })}
     />
   );
