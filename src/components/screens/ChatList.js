@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import socketIOClient from "socket.io-client";
-import { SERVER_URL } from "../../actions/types";
-import uuid from "uuid";
-import { sendMessage } from "../../actions/messages";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import socketIOClient from 'socket.io-client';
+import { SERVER_URL } from '../../actions/types';
+import uuid from 'uuid';
+import { sendMessage, getAllMessagesForKroo } from '../../actions/messages';
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import {
   ScrollView,
   FlatList,
   Image,
-} from "react-native";
+} from 'react-native';
 
 const ChatList = ({
   route,
@@ -22,10 +22,11 @@ const ChatList = ({
   auth,
   sendMessage,
   message: { loading, messages },
+  getAllMessagesForKroo,
 }) => {
   const [socket, setSocket] = useState(null);
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (socket === null) {
@@ -34,35 +35,26 @@ const ChatList = ({
     } else {
       const { itemId } = route.params;
 
-      socket.emit("joinRoom", {
+      socket.emit('joinRoom', {
         user: auth.user.displayName,
         room: itemId,
       });
 
-      // Display message that the other user has joined the chat
-      socket.on("joinRoom", (message) => {
-        sendMessage(message);
-        // console.log(messages);
-      });
+      getAllMessagesForKroo(itemId);
+
+      // // Display message that the other user has joined the chat
+      // socket.on('joinRoom', (message) => {
+      //   sendMessage(message);
+      //   // console.log(messages);
+      // });
 
       // When a message is received display it in the message box
-      socket.on("message", ({ user, message }) => {
-        // console.log('\nMessages ab yeh ha:');
-        // console.log(messages);
+      socket.on('message', ({}) => {
+        getAllMessagesForKroo(itemId);
       });
     }
   }, [socket]);
 
-  const sendMessage1 = (messagesArray) => {
-    const { itemId } = route.params;
-
-    socket.emit("message", {
-      room: itemId,
-      user: auth.user.displayName,
-      message: messagesArray[0].text,
-    });
-  };
-  // const keyExtractor = (item, index) => index.toString();
   return (
     <View style={styles.container}>
       {/* <ChatUi messages={messages} /> */}
@@ -73,7 +65,7 @@ const ChatList = ({
               <View style={[styles.item, styles.itemIn]}>
                 <View style={[styles.balloon]}>
                   <Text style={styles.messageText}>
-                    {message.user !== null ? `${message.user}: ` : ""}{" "}
+                    {message.user !== null ? `${message.user}: ` : ''}{' '}
                     {message.message}
                   </Text>
                 </View>
@@ -101,21 +93,20 @@ const ChatList = ({
           onPress={() => {
             const { itemId } = route.params;
 
-            socket.emit("message", {
+            socket.emit('message', {
               room: itemId,
               user: auth.user.displayName,
               message,
+              createdAt: Date.now(),
             });
 
-            sendMessage(message, auth.user.displayName);
-
-            setMessage("");
+            setMessage('');
           }}
           style={styles.btnSend}
         >
           <Image
             source={{
-              uri: "https://png.icons8.com/small/75/ffffff/filled-sent.png",
+              uri: 'https://png.icons8.com/small/75/ffffff/filled-sent.png',
             }}
             style={styles.iconSend}
           />
@@ -128,26 +119,26 @@ const ChatList = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "silver",
+    backgroundColor: 'silver',
     // justifyContent: "center",
     padding: 10,
-    flexDirection: "column",
+    flexDirection: 'column',
   },
   textInput: {
     flex: 4,
     fontSize: 18,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     padding: 8,
     borderRadius: 10,
   },
   textInputContainer: {
     flex: 1,
-    backgroundColor: "white",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignSelf: "baseline",
-    position: "absolute",
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignSelf: 'baseline',
+    position: 'absolute',
   },
   messagesContainer: {
     flex: 2,
@@ -158,16 +149,16 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    backgroundColor: "#0066cc",
+    backgroundColor: '#0066cc',
     padding: 12,
     borderRadius: 10,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   buttonText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   messageText: {
     fontSize: 15,
@@ -177,40 +168,40 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
   },
   footer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     height: 60,
-    backgroundColor: "#eeeeee",
+    backgroundColor: '#eeeeee',
     paddingHorizontal: 10,
     padding: 5,
   },
   btnSend: {
-    backgroundColor: "#00BFFF",
+    backgroundColor: '#00BFFF',
     width: 40,
     height: 40,
     borderRadius: 360,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   iconSend: {
     width: 30,
     height: 30,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   inputContainer: {
-    borderBottomColor: "#F5FCFF",
-    backgroundColor: "#FFFFFF",
+    borderBottomColor: '#F5FCFF',
+    backgroundColor: '#FFFFFF',
     borderRadius: 30,
     borderBottomWidth: 1,
     height: 40,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     flex: 1,
     marginRight: 10,
   },
   inputs: {
     height: 40,
     marginLeft: 16,
-    borderBottomColor: "#FFFFFF",
+    borderBottomColor: '#FFFFFF',
     flex: 1,
   },
   balloon: {
@@ -219,22 +210,22 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   itemIn: {
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
   },
   itemOut: {
-    alignSelf: "flex-end",
+    alignSelf: 'flex-end',
   },
   time: {
-    alignSelf: "flex-end",
+    alignSelf: 'flex-end',
     margin: 15,
     fontSize: 12,
-    color: "#808080",
+    color: '#808080',
   },
   item: {
     marginVertical: 10,
     flex: 1,
-    flexDirection: "row",
-    backgroundColor: "#eeeeee",
+    flexDirection: 'row',
+    backgroundColor: '#eeeeee',
     borderRadius: 200,
     padding: 2,
   },
@@ -244,6 +235,7 @@ ChatList.propTypes = {
   auth: PropTypes.object.isRequired,
   sendMessage: PropTypes.func.isRequired,
   message: PropTypes.object.isRequired,
+  getAllMessagesForKroo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -253,4 +245,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   sendMessage,
+  getAllMessagesForKroo,
 })(ChatList);

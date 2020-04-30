@@ -14,6 +14,7 @@ router.get('/messages/:id', auth, async (req, res) => {
       .collection('kroos')
       .doc(req.params.id)
       .collection('messages')
+      .orderBy('createdAt', 'asc')
       .get();
 
     const messages = [];
@@ -22,6 +23,7 @@ router.get('/messages/:id', auth, async (req, res) => {
       messages.push({
         user: message.data().user,
         message: message.data().message,
+        createdAt: message.data().createdAt,
       })
     );
 

@@ -23,17 +23,17 @@ io.on('connection', (socket) => {
   socket.on('joinRoom', ({ user, room }) => {
     // Add user to the room
     socket.join(room);
-    // Broadcast the message in the room that the user has joined the chat
-    socket.broadcast.emit('joinRoom', `${user} has joined the chat`);
+    // // Broadcast the message in the room that the user has joined the chat
+    // socket.broadcast.emit('joinRoom', `${user} has joined the chat`);
   });
 
   // This is called whenever the user sends a message
-  socket.on('message', async ({ room, user, message }) => {
+  socket.on('message', async ({ room, user, message, createdAt }) => {
     // Add message to the conversation
-    addMessage(room, user, message);
+    addMessage(room, user, message, createdAt);
 
     // Broadcast the conversation object to everyone in the room
-    io.to(room).emit('message', { user, message });
+    io.to(room).emit('message', {});
   });
 });
 
