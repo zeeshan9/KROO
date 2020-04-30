@@ -6,6 +6,8 @@ const IMAGE = {
   // logo
   ICON_LOGO: require("../img/kroologo.png"),
 
+  ICON_MESSAGE: require("../img/sendmsg.png"),
+
   // ICONS
   ICON_CHAT: require("../img/icons/chat.png"),
   ICON_SPEECH: require("../img/icons/speech-bubble.png"),

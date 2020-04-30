@@ -11,6 +11,7 @@ import store from "./src/store";
 import ChatList from "./src/components/screens/ChatList";
 import { IMAGE } from "./src/constants/Images";
 import Colors from "./src/constants/colors";
+
 const Stack = createStackNavigator();
 
 const title = "KROO";

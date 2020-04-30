@@ -18,6 +18,7 @@ export default ShareApp = () => {
       } else if (result.action === Share.dismissedAction) {
         // dismissed
       }
+      ``;
     } catch (error) {
       alert(error.message);
     }

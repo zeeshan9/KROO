@@ -11,3 +11,8 @@ export const USER_ERROR = "USER_ERROR";
 export const KROO_ADDED_SUCCESSFULLY = "KROO_ADDED_SUCCESSFULLY";
 export const ALL_KROOS_LOADED = "ALL_KROO_LOADED";
 export const KROO_ERROR = "KROO_ERROR";
+
+// Messages
+export const MESSAGE_SENT = "MESSAGE_SENT";
+export const ALL_MESSAGES_LOADED = "ALL_MESSAGES_LOADED";
+export const MESSAGE_ERROR = "MESSAGE_ERROR";
