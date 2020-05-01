@@ -13,7 +13,7 @@ router.get("/ranking", async (req, res) => {
       .firestore()
       .collection("kroos")
       .orderBy("points", "desc")
-      .limit(5)
+      // .limit(5)
       .get();
 
     const kroos = [];

@@ -131,20 +131,23 @@ const ChatList = ({
             />
           }
           renderItem={({ item }) => {
-            // console.log(item + " item");
+            // console.log(item.user + "===" + auth.user.displayName);
             // const item = message.item;
-            // let inMessage = item.type === "in";
-            let itemStyle = styles.itemIn; //inMessage ? styles.itemIn : styles.itemOut;
+            let inMessage = item.user === auth.user.displayName;
+            let itemStyle = inMessage ? styles.itemIn : styles.itemOut;
             return (
               <View style={[styles.item, itemStyle]}>
                 {/* <Text style={styles.time}>02:23:date</Text> */}
                 {/* {!inMessage && this.renderDate(item.date)} */}
                 <View style={[styles.balloon]}>
+                  <Text>{item.user} :</Text>
                   <Text>{item.message}</Text>
                 </View>
                 <Text style={styles.time}>{dhm(item.createdAt)}</Text>
                 {/* {console.log(dhm(item.createdAt) + " time")} */}
-                {/* {inMessage && this.renderDate(item.date)} */}
+                {/* {inMessage && (
+                  <Text style={styles.time}>{dhm(item.createdAt)}</Text>
+                )} */}
               </View>
             );
           }}
@@ -277,6 +280,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   balloon: {
+    flexDirection: "row",
     maxWidth: 200,
     padding: 15,
     borderRadius: 20,
