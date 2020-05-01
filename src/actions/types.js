@@ -1,6 +1,6 @@
 // Server address
 // export const SERVER_URL = "http://192.168.100.52:5000";
-export const SERVER_URL = 'https://still-citadel-35667.herokuapp.com";
+export const SERVER_URL = 'https://still-citadel-35667.herokuapp.com';
 // export const SERVER_URL = 'http://192.168.1.13:5000';
 
 // User
