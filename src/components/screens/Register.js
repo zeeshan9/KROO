@@ -11,6 +11,7 @@ import {
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/auth";
 import { showAlert } from "../../actions/alert";
+import colors from "../../constants/colors";
 
 const Register = ({ navigation, showAlert, registerUser }) => {
   const [termsAndConditionsAccepted, setTermsAndConditionsAccepted] = useState(
@@ -118,7 +119,7 @@ const Register = ({ navigation, showAlert, registerUser }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.backgroudColor,
     alignItems: "center",
     justifyContent: "center",
     padding: 10,
@@ -128,6 +129,7 @@ const styles = StyleSheet.create({
     width: "80%",
     fontSize: 22,
     marginBottom: 20,
+    color: "white",
   },
 
   textInput: {

@@ -22,11 +22,35 @@ const App = () => {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Login'>
-          <Stack.Screen name='Login' component={Login} options={{ title }} />
+          <Stack.Screen
+            name='Login'
+            component={Login}
+            options={{
+              title,
+              headerLeft: null,
+              headerStyle: {
+                backgroundColor: Colors.headerColor,
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
           <Stack.Screen
             name='Register'
             component={Register}
-            options={{ title, headerLeft: null }}
+            options={{
+              title,
+              headerLeft: null,
+              headerStyle: {
+                backgroundColor: Colors.headerColor,
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
           />
           <Stack.Screen
             name='Dashboard'
