@@ -11,6 +11,7 @@ import store from "./src/store";
 import ChatList from "./src/components/screens/ChatList";
 import { IMAGE } from "./src/constants/Images";
 import Colors from "./src/constants/colors";
+import ChatUi from "./src/components/screens/ChatUi";
 
 const Stack = createStackNavigator();
 
@@ -60,6 +61,21 @@ const App = () => {
           <Stack.Screen
             name='AddKroo'
             component={AddKroo}
+            options={{
+              title,
+              headerLeft: null,
+              headerStyle: {
+                backgroundColor: Colors.headerColor,
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
+          <Stack.Screen
+            name='ChatUi'
+            component={ChatUi}
             options={{
               title,
               headerLeft: null,

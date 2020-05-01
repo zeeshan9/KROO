@@ -10,7 +10,9 @@ const Chat = ({ auth, navigation }) => {
     // Alert.alert("Floating Button Clicked");
     navigation.navigate("AddKroo");
   };
-
+  const handlerResfresh = () => {
+    getAllKroos();
+  };
   return (
     <View style={styles.container}>
       {/* <View style={styles.topContainer}>
@@ -35,6 +37,11 @@ const Chat = ({ auth, navigation }) => {
           style={styles.FloatingButtonStyle}
         />
       </TouchableOpacity>
+      {/* <View> */}
+      {/* <TouchableOpacity onPress={() => handlerResfresh()}>
+        <Text>Refresh</Text>
+      </TouchableOpacity> */}
+      {/* </View> */}
     </View>
   );
 };

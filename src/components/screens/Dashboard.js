@@ -85,7 +85,7 @@ const Dashboard = ({ loadUser }) => {
       <Tab.Screen name='Home' component={Home} />
       <Tab.Screen name='Chat' component={Chat} />
       <Tab.Screen name='Messages' component={Messages} />
-      <Tab.Screen name='Notification' component={Notification} />
+      {/* <Tab.Screen name='Notification' component={Notification} /> */}
       <Tab.Screen name='History' component={History} />
     </Tab.Navigator>
   );

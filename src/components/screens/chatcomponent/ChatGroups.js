@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Alert,
+  TouchableOpacity,
+  RefreshControl,
+} from "react-native";
 import { ListItem, ButtonGroup } from "react-native-elements";
 import { FlatList } from "react-native-gesture-handler";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getAllKroos } from "../../../actions/kroo";
+import { getAllKroos, addMember } from "../../../actions/kroo";
 import { showAlert } from "../../../actions/alert";
 
 const ChatGroups = ({
@@ -12,6 +18,8 @@ const ChatGroups = ({
   kroo: { allKroosGroup, loading },
   showAlert,
   getAllKroos,
+  addMember,
+  auth,
 }) => {
   useEffect(() => {
     getAllKroos();
@@ -22,7 +30,13 @@ const ChatGroups = ({
       Alert.alert("JOIN ROOM", "DO you want to join the room", [
         {
           text: "Join",
-          onPress: () => navigation.navigate("ChatList", { itemId: item.id }),
+          onPress: () => {
+            addMember(item.id, auth.user.id);
+            navigation.navigate("ChatList", {
+              itemId: item.id,
+              userRoom: false,
+            });
+          },
         },
         {
           text: "closed",
@@ -75,18 +89,43 @@ const ChatGroups = ({
       onPress={() => onPress(item)}
     />
   );
-
+  const handlerResfresh = () => {
+    // navigation.navigate("Chat");
+    setisRefreshing(true);
+    getAllKroos();
+    setisRefreshing(false);
+  };
+  const [isRefreshing, setisRefreshing] = useState(false);
   const keyExtractor = (item, index) => index.toString();
   return (
     // <View>
 
     // ! loading && allKroosGroup.length > 0b
     //   ? allKroosGroup.map((kroo) => {
-    <FlatList
-      keyExtractor={keyExtractor}
-      data={allKroosGroup}
-      renderItem={renderItem}
-    />
+    <View style={{ width: "100%", height: "100%" }}>
+      {/* <Refreshlist
+        allKroosGroup={allKroosGroup}
+        loading={loading}
+        navigation={navigation}
+        addMember={addMember}
+        auth={auth}
+      /> */}
+      <FlatList
+        keyExtractor={keyExtractor}
+        data={allKroosGroup}
+        renderItem={renderItem}
+        onRefresh={handlerResfresh}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handlerResfresh.bind(this)}
+          />
+        }
+      />
+      {/* <TouchableOpacity onPress={() => handlerResfresh}>
+        <Text>refresh</Text>
+      </TouchableOpacity> */}
+    </View>
 
     // console.log("all kroo " + kroo.id + "name : " + kroo.name);
     //   })
@@ -114,10 +153,15 @@ ChatGroups.propTypes = {
   navigation: PropTypes.object.isRequired,
   showAlert: PropTypes.func.isRequired,
   getAllKroos: PropTypes.func.isRequired,
+  addMember: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   kroo: state.kroo,
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getAllKroos, showAlert })(ChatGroups);
+export default connect(mapStateToProps, { getAllKroos, showAlert, addMember })(
+  ChatGroups
+);

@@ -1,224 +1,125 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
-  Text,
   View,
-  TouchableOpacity,
-  Image,
+  Text,
   Alert,
-  ScrollView,
-  TextInput,
-  FlatList,
-  Button,
+  TouchableOpacity,
+  RefreshControl,
+  StyleSheet,
 } from "react-native";
-import { IMAGE } from "../../../constants/Images";
+import { ListItem, ButtonGroup } from "react-native-elements";
+import { FlatList } from "react-native-gesture-handler";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getAllUsers, createRoomforUsers } from "../../../actions/kroo";
+const Messages = ({
+  navigation,
+  user: { allUsersLoaded, loading },
+  showAlert,
+  getAllUsers,
+  createRoomforUsers,
+  // addMember,
+  auth,
+}) => {
+  useEffect(() => {
+    getAllUsers();
+  }, [getAllUsers, loading]);
 
-export default class Messages extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [
-        {
-          id: 1,
-          date: "9:50 am",
-          type: "in",
-          message: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet",
-        },
-        {
-          id: 2,
-          date: "9:50 am",
-          type: "out",
-          message: "Lorem ipsum dolor sit amet",
-        },
-        {
-          id: 3,
-          date: "9:50 am",
-          type: "in",
-          message: "Lorem ipsum dolor sit a met",
-        },
-        {
-          id: 4,
-          date: "9:50 am",
-          type: "in",
-          message: "Lorem ipsum dolor sit a met",
-        },
-        {
-          id: 5,
-          date: "9:50 am",
-          type: "out",
-          message: "Lorem ipsum dolor sit a met",
-        },
-        {
-          id: 6,
-          date: "9:50 am",
-          type: "out",
-          message: "Lorem ipsum dolor sit a met",
-        },
-        {
-          id: 7,
-          date: "9:50 am",
-          type: "in",
-          message: "Lorem ipsum dolor sit a met",
-        },
-        {
-          id: 8,
-          date: "9:50 am",
-          type: "in",
-          message: "Lorem ipsum dolor sit a met",
-        },
-        {
-          id: 9,
-          date: "9:50 am",
-          type: "in",
-          message: "Lorem ipsum dolor sit a met",
-        },
-      ],
-    };
-  }
-
-  renderDate = (date) => {
-    return <Text style={styles.time}>{date}</Text>;
+  const onPress = (item) => {
+    const authid = "yMu2KPzlvyZNkK3jsneSuzJuRCV2";
+    // createRoomforUsers(item.id, authid, navigation);
+    // navigation.navigate("ChatUi", { itemId: item.id });
+    // if (true) {
+    //   Alert.alert("JOIN ROOM", "DO you want to join the room", [
+    //     {
+    //       text: "Join",
+    //       onPress: () => {
+    //         addMember(item.id, auth.user.id);
+    //         navigation.navigate("ChatList", { itemId: item.id });
+    //       },
+    //     },
+    //     {
+    //       text: "closed",
+    //     },
+    //   ]);
+    // } else {
+    //   navigation.navigate("ChatList", { itemId: item.id });
+    // }
   };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <FlatList
-          style={styles.list}
-          data={this.state.data}
-          keyExtractor={(item) => {
-            return item.id;
-          }}
-          renderItem={(message) => {
-            console.log(item + " item");
-            const item = message.item;
-            let inMessage = item.type === "in";
-            let itemStyle = inMessage ? styles.itemIn : styles.itemOut;
-            return (
-              <View style={[styles.item, itemStyle]}>
-                {!inMessage && this.renderDate(item.date)}
-                <View style={[styles.balloon]}>
-                  <Text>{item.message}</Text>
-                </View>
-                {inMessage && this.renderDate(item.date)}
-              </View>
-            );
-          }}
-        />
-        <View style={styles.footer}>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputs}
-              placeholder='Write a message...'
-              underlineColorAndroid='transparent'
-              onChangeText={(name_address) => this.setState({ name_address })}
-            />
-          </View>
+  const renderItem = ({ item }) => (
+    <ListItem
+      title={item.name}
+      // subtitle={item.name}
+      leftAvatar={{
+        source: item.avatar_url && { uri: item.avatar_url },
+        title: item.name[0],
+      }}
+      bottomDivider
+      chevron={{ color: "white" }}
+      friction={90}
+      activeScale={0.95}
+      tension={100}
+      titleStyle={{ color: "#F5F5F5", fontWeight: "bold" }}
+      subtitleStyle={{ color: "#F5F5F5" }}
+      linearGradientProps={{
+        colors: ["#787878", "#909090"],
+        start: { x: 1, y: 0 },
+        end: { x: 0.2, y: 0 },
+      }}
+      onPress={() => onPress(item)}
+    />
+  );
+  const handlerResfresh = () => {
+    setisRefreshing(true);
+    getAllUsers();
+    setisRefreshing(false);
+  };
+  const [isRefreshing, setisRefreshing] = useState(false);
+  const keyExtractor = (item, index) => index.toString();
+  return (
+    <View style={{ width: "100%", height: "100%" }}>
+      {/* <Text>{allUsersLoaded}</Text> */}
+      {console.log(allUsersLoaded + " users")}
+      <FlatList
+        keyExtractor={keyExtractor}
+        data={allUsersLoaded}
+        renderItem={renderItem}
+        onRefresh={handlerResfresh}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handlerResfresh.bind(this)}
+          />
+        }
+      />
+    </View>
+  );
+};
 
-          <TouchableOpacity style={styles.btnSend}>
-            <Image
-              source={{
-                uri: "https://png.icons8.com/small/75/ffffff/filled-sent.png",
-              }}
-              style={styles.iconSend}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  }
-}
+Messages.propTypes = {
+  navigation: PropTypes.object.isRequired,
+  showAlert: PropTypes.func.isRequired,
+  createRoomforUsers: PropTypes.func.isRequired,
+  // addMember: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.user,
+  auth: state.auth,
+});
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  list: {
-    paddingHorizontal: 17,
-  },
-  footer: {
-    flexDirection: "row",
-    height: 60,
-    backgroundColor: "#eeeeee",
-    paddingHorizontal: 10,
-    padding: 5,
-  },
-  btnSend: {
-    backgroundColor: "#00BFFF",
-    width: 40,
-    height: 40,
-    borderRadius: 360,
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  iconSend: {
-    width: 30,
-    height: 30,
-    alignSelf: "center",
-  },
-  inputContainer: {
-    borderBottomColor: "#F5FCFF",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 30,
-    borderBottomWidth: 1,
-    height: 40,
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-    marginRight: 10,
-  },
-  inputs: {
-    height: 40,
-    marginLeft: 16,
-    borderBottomColor: "#FFFFFF",
-    flex: 1,
-  },
-  balloon: {
-    maxWidth: 250,
-    padding: 15,
-    borderRadius: 20,
-  },
-  itemIn: {
-    alignSelf: "flex-start",
-  },
-  itemOut: {
-    alignSelf: "flex-end",
-  },
-  time: {
-    alignSelf: "flex-end",
-    margin: 15,
-    fontSize: 12,
-    color: "#808080",
-  },
-  item: {
-    marginVertical: 14,
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: "#eeeeee",
-    borderRadius: 300,
-    padding: 5,
+    padding: 10,
   },
 });
-// import React from "react";
-// import { StyleSheet, View, Text } from "react-native";
 
-// const Messages = () => {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Your messages</Text>
-//       <Text>List of messages</Text>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     padding: 10,
-//   },
-// });
-
-// export default Messages;
+export default connect(mapStateToProps, { getAllUsers, createRoomforUsers })(
+  Messages
+);

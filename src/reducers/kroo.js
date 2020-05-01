@@ -2,11 +2,13 @@ import {
   KROO_ADDED_SUCCESSFULLY,
   KROO_ERROR,
   ALL_KROOS_LOADED,
-} from '../actions/types';
+  ALL_RANKING_LOADED,
+} from "../actions/types";
 
 const initialState = {
   krooGroup: null,
   allKroosGroup: [],
+  allRankingGroup: [],
   loading: true,
 };
 
@@ -17,9 +19,16 @@ export default function (state = initialState, action) {
     case ALL_KROOS_LOADED:
       return {
         ...state,
-        allKroosGroup: payload, //[...state.allKroosGroup, payload],
+        allKroosGroup: payload,
         loading: false,
       };
+    case ALL_RANKING_LOADED:
+      return {
+        ...state,
+        allRankingGroup: payload,
+        loading: false,
+      };
+
     case KROO_ADDED_SUCCESSFULLY:
       return {
         ...state,
@@ -31,6 +40,7 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
       };
+    case KROO_ADDED_SUCCESSFULLY:
     default:
       return state;
   }

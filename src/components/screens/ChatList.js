@@ -14,6 +14,7 @@ import {
   ScrollView,
   // FlatList,
   Image,
+  RefreshControl,
 } from "react-native";
 import { ListItem } from "react-native-elements";
 import { FlatList } from "react-native-gesture-handler";
@@ -103,7 +104,15 @@ const ChatList = ({
   const renderDate = (date) => {
     return <Text style={styles.time}>{date}</Text>;
   };
+  const handlerResfresh = () => {
+    const { itemId } = route.params;
+    setisRefreshing(true);
+    getAllMessagesForKroo(itemId);
+    console.log(itemId + " item");
+    setisRefreshing(false);
+  };
   const keyExtractor = (item, index) => index.toString();
+  const [isRefreshing, setisRefreshing] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -114,6 +123,13 @@ const ChatList = ({
           initialScrollIndex={messages.length - 1}
           keyExtractor={keyExtractor}
           data={messages}
+          onRefresh={handlerResfresh}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handlerResfresh.bind(this)}
+            />
+          }
           renderItem={({ item }) => {
             // console.log(item + " item");
             // const item = message.item;
@@ -126,7 +142,8 @@ const ChatList = ({
                 <View style={[styles.balloon]}>
                   <Text>{item.message}</Text>
                 </View>
-                <Text style={styles.time}>02:23:date</Text>
+                <Text style={styles.time}>{dhm(item.createdAt)}</Text>
+                {/* {console.log(dhm(item.createdAt) + " time")} */}
                 {/* {inMessage && this.renderDate(item.date)} */}
               </View>
             );
@@ -264,6 +281,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 20,
     borderTopRightRadius: 2,
+    elevation: 1 / 2,
   },
   itemIn: {
     alignSelf: "flex-start",
@@ -306,3 +324,31 @@ export default connect(mapStateToProps, {
   sendMessage,
   getAllMessagesForKroo,
 })(ChatList);
+
+function dhm(ms) {
+  const days = Math.floor(ms / (24 * 60 * 60 * 1000));
+  const daysms = ms % (24 * 60 * 60 * 1000);
+  const hours = Math.floor(daysms / (60 * 60 * 1000));
+  const hoursms = ms % (60 * 60 * 1000);
+  const minutes = Math.floor(hoursms / (60 * 1000));
+  const minutesms = ms % (60 * 1000);
+  const sec = Math.floor(minutesms / 1000);
+  return hours + ":" + minutes + ":" + sec;
+  // var cd = 24 * 60 * 60 * 1000,
+  //   ch = 60 * 60 * 1000,
+  //   d = Math.floor(t / cd),
+  //   h = Math.floor((t - d * cd) / ch),
+  //   m = Math.round((t - d * cd - h * ch) / 60000),
+  //   pad = function (n) {
+  //     return n < 10 ? "0" + n : n;
+  //   };
+  // if (m === 60) {
+  //   h++;
+  //   m = 0;
+  // }
+  // if (h === 24) {
+  //   d++;
+  //   h = 0;
+  // }
+  // return [pad(h), pad(m)].join(":");
+}
