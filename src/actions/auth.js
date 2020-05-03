@@ -1,27 +1,55 @@
-import firebase from "../config/firebase";
-import { USER_ERROR, USER_LOADED } from "./types";
+import {
+  USER_ERROR,
+  USER_LOADED,
+  SERVER_URL,
+  REGISTRATION_SUCCESSSFUL,
+  LOGIN_SUCCESSSFUL,
+  USER_RANKING_LOADED,
+} from "./types";
 import { showAlert } from "./alert";
+import axios from "axios";
+import { AsyncStorage } from "react-native";
 
-// This function is used to login the user
-export const loginUser = (email, password, navigation) => async (dispatch) => {
+// This function is used to load the user with the token
+export const loadUser = () => async (dispatch) => {
   try {
-    await firebase.auth().signInWithEmailAndPassword(email, password);
+    const token = await AsyncStorage.getItem("token");
 
-    const user = firebase.auth().currentUser;
+    const config = {
+      headers: {
+        "x-auth-token": token,
+      },
+    };
 
-    const res = await firebase
-      .firestore()
-      .collection("users")
-      .doc(user.uid)
-      .get();
+    const res = await axios.get(`${SERVER_URL}/api/auth/me`, config);
 
     dispatch({
       type: USER_LOADED,
-      payload: {
-        userId: user.uid,
-        displayName: user.displayName,
-        credits: res.data().credits,
-      },
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({ type: USER_ERROR });
+  }
+};
+
+// This function is used to login the user
+export const loginUser = (email, password, navigation) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ email, password });
+
+  try {
+    const res = await axios.post(`${SERVER_URL}/api/auth`, body, config);
+
+    await AsyncStorage.setItem("token", res.data.token);
+
+    dispatch({
+      type: LOGIN_SUCCESSSFUL,
+      payload: res.data.token,
     });
 
     dispatch(showAlert("Login successful"));
@@ -29,7 +57,7 @@ export const loginUser = (email, password, navigation) => async (dispatch) => {
     navigation.navigate("Dashboard");
   } catch (err) {
     dispatch({ type: USER_ERROR });
-    dispatch(showAlert(err.message));
+    dispatch(showAlert("Invalid credentials"));
   }
 };
 
@@ -37,27 +65,41 @@ export const loginUser = (email, password, navigation) => async (dispatch) => {
 export const registerUser = (name, email, password, navigation) => async (
   dispatch
 ) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ name, email, password });
+
   try {
-    await firebase.auth().createUserWithEmailAndPassword(email, password);
+    const res = await axios.post(`${SERVER_URL}/api/users`, body, config);
 
-    const user = firebase.auth().currentUser;
-
-    await user.updateProfile({
-      displayName: name,
-    });
-
-    await firebase.firestore().collection("users").doc(user.uid).set({
-      credits: 0,
-    });
+    await AsyncStorage.setItem("token", res.data.token);
 
     dispatch({
-      type: USER_LOADED,
-      payload: { userId: user.uid, displayName: user.displayName, credits: 0 },
+      type: REGISTRATION_SUCCESSSFUL,
+      payload: res.data.token,
     });
 
     dispatch(showAlert("Registration successful"));
 
     navigation.navigate("Login");
+  } catch (err) {
+    dispatch({ type: USER_ERROR });
+    dispatch(showAlert(err.message));
+  }
+};
+
+export const loadUserRanking = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${SERVER_URL}/api/users/ranking`);
+
+    dispatch({
+      type: USER_RANKING_LOADED,
+      payload: res.data,
+    });
   } catch (err) {
     dispatch({ type: USER_ERROR });
     dispatch(showAlert(err.message));

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import {
   StyleSheet,
   View,
@@ -7,10 +7,11 @@ import {
   TextInput,
   TouchableOpacity,
   CheckBox,
-} from 'react-native';
-import { connect } from 'react-redux';
-import { registerUser } from '../../actions/auth';
-import { showAlert } from '../../actions/alert';
+} from "react-native";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/auth";
+import { showAlert } from "../../actions/alert";
+import colors from "../../constants/colors";
 
 const Register = ({ navigation, showAlert, registerUser }) => {
   const [termsAndConditionsAccepted, setTermsAndConditionsAccepted] = useState(
@@ -18,18 +19,18 @@ const Register = ({ navigation, showAlert, registerUser }) => {
   );
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password1: '',
+    name: "",
+    email: "",
+    password: "",
+    password1: "",
   });
 
   const { name, email, password, password1 } = formData;
 
-  const PROPERTY_NAME = 'name';
-  const PROPERTY_EMAIL = 'email';
-  const PROPERTY_PASSWORD = 'password';
-  const PROPERTY_PASSWORD1 = 'password1';
+  const PROPERTY_NAME = "name";
+  const PROPERTY_EMAIL = "email";
+  const PROPERTY_PASSWORD = "password";
+  const PROPERTY_PASSWORD1 = "password1";
 
   const onChangeText = (text, property) => {
     switch (property) {
@@ -39,7 +40,7 @@ const Register = ({ navigation, showAlert, registerUser }) => {
       case PROPERTY_EMAIL:
         setFormData({ ...formData, email: text });
         break;
-        PROPERTY_NAME;
+      // PROPERTY_NAME;
       case PROPERTY_PASSWORD:
         setFormData({ ...formData, password: text });
         break;
@@ -53,16 +54,16 @@ const Register = ({ navigation, showAlert, registerUser }) => {
 
   const onSubmit = () => {
     if (!termsAndConditionsAccepted) {
-      showAlert('Please accept the terms and conditions');
+      showAlert("Please accept the terms and conditions");
     } else if (
-      name === '' ||
-      email === '' ||
-      password === '' ||
-      password1 === ''
+      name === "" ||
+      email === "" ||
+      password === "" ||
+      password1 === ""
     ) {
-      showAlert('All fields are required');
+      showAlert("All fields are required");
     } else if (password !== password1) {
-      showAlert('Password do not match');
+      showAlert("Password do not match");
     } else {
       registerUser(name, email, password, navigation);
     }
@@ -118,48 +119,49 @@ const Register = ({ navigation, showAlert, registerUser }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: colors.backgroudColor,
+    alignItems: "center",
+    justifyContent: "center",
     padding: 10,
   },
 
   text: {
-    width: '80%',
+    width: "80%",
     fontSize: 22,
     marginBottom: 20,
+    color: "white",
   },
 
   textInput: {
-    width: '80%',
-    textAlign: 'center',
+    width: "80%",
+    textAlign: "center",
     marginBottom: 15,
     fontSize: 22,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     padding: 10,
     borderRadius: 10,
   },
 
   button: {
-    backgroundColor: '#ec7600',
-    width: '80%',
+    backgroundColor: "#ec7600",
+    width: "80%",
     padding: 12,
     marginTop: 18,
     borderRadius: 10,
   },
 
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
   },
 
   checkBoxContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   label: {

@@ -6,10 +6,12 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/auth";
-
+import { IMAGE } from "../../constants/Images";
+import colors from "../../constants/colors";
 const Login = ({ navigation, loginUser }) => {
   const [formData, setFormData] = useState({
     email: "",
@@ -36,7 +38,10 @@ const Login = ({ navigation, loginUser }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>KROO</Text>
+      {/* <Text style={styles.logo}>KROO</Text> */}
+      <View style={styles.title}>
+        <Image source={IMAGE.ICON_LOGO} style={styles.image} />
+      </View>
       <TextInput
         style={styles.textInput}
         placeholder='Email'
@@ -67,16 +72,20 @@ const Login = ({ navigation, loginUser }) => {
 };
 
 const styles = StyleSheet.create({
+  image: {
+    height: 120,
+    width: 200,
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.backgroudColor,
     alignItems: "center",
     justifyContent: "center",
     padding: 10,
   },
 
   title: {
-    fontSize: 60,
+    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 20,
   },
@@ -89,7 +98,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 25,
+    color: "white",
+    elevation: 4,
   },
 
   button: {
@@ -97,7 +108,10 @@ const styles = StyleSheet.create({
     width: "80%",
     padding: 12,
     marginTop: 18,
-    borderRadius: 10,
+    borderRadius: 25,
+    borderColor: "silver",
+    borderWidth: 1 / 2,
+    elevation: 8,
   },
 
   buttonText: {
