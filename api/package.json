@@ -13,7 +13,7 @@
     "express-validator": "^6.4.0",
     "firebase-admin": "^8.10.0",
     "jsonwebtoken": "^8.5.1",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.4.0"
   },
   "author": "",
   "license": "ISC",
